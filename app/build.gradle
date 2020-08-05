@@ -18,7 +18,14 @@ android {
     }
 
     buildTypes {
+        def API_URL = "https://api.themoviedb.org/3/"
+
+        debug {
+            buildConfigField("String", "API_URL", "\"${API_URL}\"")
+        }
+
         release {
+            buildConfigField("String", "API_URL", "\"${API_URL}\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
@@ -98,7 +105,6 @@ dependencies {
     // optional - RxJava support for Room
     implementation "androidx.room:room-rxjava2:2.2.5"
 
-
     //Timber
     implementation 'com.jakewharton.timber:timber:4.7.1'
 
@@ -107,9 +113,7 @@ dependencies {
     kapt 'com.github.bumptech.glide:compiler:4.11.0'
     implementation 'jp.wasabeef:glide-transformations:4.0.1'
 
-
     implementation 'androidx.paging:paging-runtime-ktx:2.1.2'
-
 
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
@@ -120,5 +124,16 @@ dependencies {
     implementation "androidx.work:work-rxjava2:2.4.0"
 
     implementation 'com.google.code.gson:gson:2.8.6'
+
+    def nav_version = "2.3.0"
+    // Kotlin
+    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
+    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
+
+    // Feature module Support
+    implementation "androidx.navigation:navigation-dynamic-features-fragment:$nav_version"
+
+    // Testing Navigation
+    androidTestImplementation "androidx.navigation:navigation-testing:$nav_version"
 
 }
