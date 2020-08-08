@@ -4,11 +4,11 @@ import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterF
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import learn.htm.projectlearn.BuildConfig
-import learn.htm.projectlearn.data.remote.ParamsInterceptor
 import learn.htm.projectlearn.data.remote.api.CONNECTION_API_TIME_OUT
 import learn.htm.projectlearn.data.remote.api.MovieAPI
 import learn.htm.projectlearn.data.remote.api.READ_API_TIME_OUT
 import learn.htm.projectlearn.data.remote.api.WRITE_API_TIME_OUT
+import learn.htm.projectlearn.data.remote.interceptor.ParamsInterceptor
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -62,7 +62,8 @@ fun provideOkHttpClient(
         .connectTimeout(CONNECTION_API_TIME_OUT, TimeUnit.SECONDS)
         .writeTimeout(WRITE_API_TIME_OUT, TimeUnit.SECONDS).build()
 
-fun provideParamsInterceptor(): Interceptor = ParamsInterceptor()
+fun provideParamsInterceptor(): Interceptor =
+    ParamsInterceptor()
 
 private fun provideMoshi(): Moshi =
     Moshi.Builder()

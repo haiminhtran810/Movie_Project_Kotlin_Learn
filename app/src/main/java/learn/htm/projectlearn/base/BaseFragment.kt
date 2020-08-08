@@ -34,5 +34,8 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
             executePendingBindings()
             lifecycleOwner = this@BaseFragment
         }
+        observeEvent()
     }
+
+    open fun observeEvent() {}
 }

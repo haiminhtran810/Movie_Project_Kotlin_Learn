@@ -1,11 +1,12 @@
 package learn.htm.projectlearn.data.remote.repository.base
 
+import learn.htm.projectlearn.data.remote.response.BaseResponse
 import org.koin.core.KoinComponent
 import retrofit2.Response
 import java.io.IOException
 
 abstract class BaseRepository : KoinComponent {
-    private suspend fun <T : BaseData> apiResult(
+    private suspend fun <T : BaseResponse> apiResult(
         call: suspend () -> Response<T>,
         errorMessage: String
     ): Result<T> {
@@ -21,7 +22,10 @@ abstract class BaseRepository : KoinComponent {
         return Result.Error(IOException("Error occurred during getting safe API - $errorMessage"))
     }
 
-    suspend fun <T : BaseData> apiCall(call: suspend () -> Response<T>, errorMessage: String): T? {
+    suspend fun <T : BaseResponse> apiCall(
+        call: suspend () -> Response<T>,
+        errorMessage: String
+    ): T? {
         val result: Result<T> = apiResult(call, errorMessage)
         var data: T? = null
         when (result) {

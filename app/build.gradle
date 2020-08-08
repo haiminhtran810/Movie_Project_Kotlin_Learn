@@ -19,13 +19,26 @@ android {
 
     buildTypes {
         def API_URL = "https://api.themoviedb.org/3/"
+        def SMALL_IMAGE_URL = "https://image.tmdb.org/t/p/w200"
+        def LARGE_IMAGE_URL = "https://image.tmdb.org/t/p/w500"
+        def ORIGINAL_IMAGE_URL = "https://image.tmdb.org/t/p/original"
+        def API_KEY = "3e047b2cc8fc38537ee7b3e6f547e53c"
+
 
         debug {
             buildConfigField("String", "API_URL", "\"${API_URL}\"")
+            buildConfigField("String", "SMALL_IMAGE_URL", "\"${SMALL_IMAGE_URL}\"")
+            buildConfigField("String", "LARGE_IMAGE_URL", "\"${LARGE_IMAGE_URL}\"")
+            buildConfigField("String", "ORIGINAL_IMAGE_URL", "\"${ORIGINAL_IMAGE_URL}\"")
+            buildConfigField("String", "API_KEY", "\"${API_KEY}\"")
         }
 
         release {
             buildConfigField("String", "API_URL", "\"${API_URL}\"")
+            buildConfigField("String", "SMALL_IMAGE_URL", "\"${SMALL_IMAGE_URL}\"")
+            buildConfigField("String", "LARGE_IMAGE_URL", "\"${LARGE_IMAGE_URL}\"")
+            buildConfigField("String", "ORIGINAL_IMAGE_URL", "\"${ORIGINAL_IMAGE_URL}\"")
+            buildConfigField("String", "API_KEY", "\"${API_KEY}\"")
             minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }

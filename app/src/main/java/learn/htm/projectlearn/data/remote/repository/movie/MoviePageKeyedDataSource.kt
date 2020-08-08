@@ -5,6 +5,7 @@ import androidx.paging.PageKeyedDataSource
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import learn.htm.projectlearn.data.remote.MovieRepository
 import learn.htm.projectlearn.data.remote.repository.NetworkState
 import learn.htm.projectlearn.model.Movie
 import java.util.concurrent.Executor
@@ -41,7 +42,7 @@ class MoviePageKeyedDataSource(
             initialLoad.postValue(NetworkState.LOADING)
             coroutineScope.launch {
 
-                movieRepository.getMoviesPopular(
+                movieRepository.getMovieListPopularAsync(
                     pageIndex = pageIndex,
                     pageSize = pageSize
                 )?.data?.let {
@@ -58,7 +59,10 @@ class MoviePageKeyedDataSource(
     override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Movie>) {
         coroutineScope.launch {
 
-            movieRepository.getMoviesPopular(params.key + 1, pageSize = pageSize)?.data?.let {
+            movieRepository.getMovieListPopularAsync(
+                params.key + 1,
+                pageSize = pageSize
+            )?.data?.let {
                 callback.onResult(it, null)
             }
             networkState.postValue(NetworkState.LOADED)
