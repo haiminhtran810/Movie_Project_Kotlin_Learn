@@ -7,12 +7,12 @@ import androidx.paging.PagedList
 import androidx.paging.toLiveData
 import kotlinx.coroutines.CoroutineScope
 import learn.htm.projectlearn.base.BaseViewModel
+import learn.htm.projectlearn.data.remote.MovieRepository
 import learn.htm.projectlearn.data.remote.api.PAGE_INDEX
 import learn.htm.projectlearn.data.remote.api.PAGE_SIZE
 import learn.htm.projectlearn.data.remote.repository.Listing
 import learn.htm.projectlearn.data.remote.repository.NetworkState
 import learn.htm.projectlearn.data.remote.repository.movie.MovieDataSourceFactory
-import learn.htm.projectlearn.data.remote.repository.movie.MovieRepository
 import learn.htm.projectlearn.model.Movie
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors

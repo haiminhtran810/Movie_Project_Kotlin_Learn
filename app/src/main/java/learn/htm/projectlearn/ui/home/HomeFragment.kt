@@ -1,7 +1,6 @@
 package learn.htm.projectlearn.ui.home
 
-import android.os.Bundle
-import android.view.View
+import androidx.lifecycle.Observer
 import learn.htm.projectlearn.R
 import learn.htm.projectlearn.base.BaseFragment
 import learn.htm.projectlearn.databinding.FragmentHomeBinding
@@ -14,9 +13,13 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     override val layoutId: Int
         get() = R.layout.fragment_home
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        //viewModel.getMovies()
+    override fun observeEvent() {
+        viewModel.apply {
+            movies.observe(viewLifecycleOwner, Observer {
+                val a = it
+            })
+        }
+
     }
 
     companion object {
