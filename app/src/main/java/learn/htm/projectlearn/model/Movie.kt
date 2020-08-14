@@ -1,11 +1,8 @@
 package learn.htm.projectlearn.model
 
-import android.os.Parcelable
 import com.squareup.moshi.Json
-import kotlinx.android.parcel.Parcelize
-import learn.htm.projectlearn.data.remote.repository.base.BaseData
 
-@Parcelize
+
 data class Movie(
     @Json(name = "id")
     val id: Int? = 0,
@@ -31,4 +28,4 @@ data class Movie(
     val voteAverage: Double? = 0.0,
     @Json(name = "vote_count")
     val voteCount: Int? = 0
-) : BaseData(), Parcelable
+)

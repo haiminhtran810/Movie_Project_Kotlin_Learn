@@ -22,7 +22,11 @@ abstract class BaseActivity<viewDataBinding : ViewDataBinding, viewModel : BaseV
         super.onCreate(savedInstanceState, persistentState)
         if (viewBinding == null) {
             viewBinding = DataBindingUtil.setContentView(this, layoutId)
-            viewBinding?.setVariable(BR.viewModel, viewModel)
+            viewBinding?.apply {
+                setVariable(BR.viewModel, viewModel)
+                lifecycleOwner = this@BaseActivity
+                executePendingBindings()
+            }
         }
         observeEvent()
     }
