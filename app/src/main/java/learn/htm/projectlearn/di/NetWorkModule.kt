@@ -1,14 +1,14 @@
 package learn.htm.projectlearn.di
 
-import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import com.squareup.moshi.Moshi
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import learn.htm.projectlearn.BuildConfig
 import learn.htm.projectlearn.data.remote.api.CONNECTION_API_TIME_OUT
 import learn.htm.projectlearn.data.remote.api.MovieAPI
 import learn.htm.projectlearn.data.remote.api.READ_API_TIME_OUT
 import learn.htm.projectlearn.data.remote.api.WRITE_API_TIME_OUT
-import learn.htm.projectlearn.data.remote.interceptor.ParamsInterceptor
+import learn.htm.projectlearn.data.remote.factory.RxErrorHandlingFactory
+import learn.htm.projectlearn.data.remote.interceptor.HeaderInterceptor
+import learn.htm.projectlearn.data.remote.moshi.MoshiArrayListJsonAdapter
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -29,7 +29,7 @@ val netWorkModule = module {
     * */
     factory(named(LOG_INTERCEPTOR)) { provideLogInterceptor() }
     factory { provideMoshi() }
-    factory(named(PARAMS_INTERCEPTOR)) { provideParamsInterceptor() }
+    factory(named(PARAMS_INTERCEPTOR)) { provideHeaderInterceptor() }
     /*
     * single — indicates that a unique instance will be created at the beginning and shared on every future injection.
     * */
@@ -62,20 +62,20 @@ fun provideOkHttpClient(
         .connectTimeout(CONNECTION_API_TIME_OUT, TimeUnit.SECONDS)
         .writeTimeout(WRITE_API_TIME_OUT, TimeUnit.SECONDS).build()
 
-fun provideParamsInterceptor(): Interceptor =
-    ParamsInterceptor()
+fun provideHeaderInterceptor(): Interceptor =
+    HeaderInterceptor()
 
 private fun provideMoshi(): Moshi =
     Moshi.Builder()
-        .add(KotlinJsonAdapterFactory())
+        .add(MoshiArrayListJsonAdapter.FACTORY)
         .build()
 
 private fun provideDefaultRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Retrofit =
     Retrofit.Builder()
         .baseUrl(BuildConfig.API_URL)
         .client(okHttpClient)
-        .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .addCallAdapterFactory(CoroutineCallAdapterFactory())
+        .addConverterFactory(MoshiConverterFactory.create())
+        .addCallAdapterFactory(RxErrorHandlingFactory())
         .build()
 
 private fun provideServerAPIService(retrofit: Retrofit): MovieAPI =
