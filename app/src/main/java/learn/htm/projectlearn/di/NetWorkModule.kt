@@ -74,7 +74,7 @@ private fun provideDefaultRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Re
     Retrofit.Builder()
         .baseUrl(BuildConfig.API_URL)
         .client(okHttpClient)
-        .addConverterFactory(MoshiConverterFactory.create())
+        .addConverterFactory(MoshiConverterFactory.create(moshi))
         .addCallAdapterFactory(RxErrorHandlingFactory())
         .build()
 

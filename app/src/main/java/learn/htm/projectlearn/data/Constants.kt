@@ -5,9 +5,15 @@ object Constants {
     const val APP_WEB_VIEW = " APP_WEB_VIEW"
     const val PREF_FIREBASE_TOKEN = "firebase_token"
 
+    const val DEFAULT_FIRST_PAGE = 1
+    const val DEFAULT_NUM_VISIBLE_THRESHOLD = 3
+    const val DEFAULT_ITEM_PER_PAGE = 10
+    const val THRESHOLD_CLICK_TIME = 1000
+    const val MIN_PASSWORD_LENGTH = 8
+
     const val ANDROID_OS = "ANDROID"
     const val USER_AGENT = "User-Agent"
-    const val USER_AGENT_VALUE = "FRSQUARE/okhttp/3.12.0"
+    const val USER_AGENT_VALUE = "abc/okhttp/3.12.0"
 
     // Format only for data and domain layer, not for presentation layer.
     // If you want use for presentation layer, find format in configs.xml file

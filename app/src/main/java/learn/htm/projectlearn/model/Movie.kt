@@ -1,8 +1,10 @@
 package learn.htm.projectlearn.model
 
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
+import learn.htm.projectlearn.BuildConfig
 
-
+@JsonClass(generateAdapter = true)
 data class Movie(
     @Json(name = "id")
     val id: Int? = 0,
@@ -28,4 +30,7 @@ data class Movie(
     val voteAverage: Double? = 0.0,
     @Json(name = "vote_count")
     val voteCount: Int? = 0
-)
+) {
+    fun getImageLink() = "${BuildConfig.ORIGINAL_IMAGE_URL}$posterPath"
+    fun getImageBackdropPathLink() = "${BuildConfig.ORIGINAL_IMAGE_URL}$backdropPath"
+}

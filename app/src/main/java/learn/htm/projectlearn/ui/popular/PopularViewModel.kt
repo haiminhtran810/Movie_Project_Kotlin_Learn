@@ -1,11 +1,11 @@
-package learn.htm.projectlearn.ui.home
+package learn.htm.projectlearn.ui.popular
 
 import learn.htm.projectlearn.base.BaseLoadMoreRefreshViewModel
 import learn.htm.projectlearn.data.remote.repository.MovieRepository
 import learn.htm.projectlearn.model.Movie
 import learn.htm.projectlearn.utils.RxUtils
 
-class HomeViewModel(private val movieRepository: MovieRepository) :
+class PopularViewModel(private val movieRepository: MovieRepository) :
     BaseLoadMoreRefreshViewModel<Movie>() {
     private fun getMovies(page: Int) {
         addDisposable(

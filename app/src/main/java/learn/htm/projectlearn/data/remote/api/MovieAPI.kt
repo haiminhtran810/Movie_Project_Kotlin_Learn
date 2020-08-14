@@ -1,13 +1,13 @@
 package learn.htm.projectlearn.data.remote.api
 
 import io.reactivex.Single
-import learn.htm.projectlearn.data.remote.response.GetMovieResponse
+import learn.htm.projectlearn.data.remote.response.MovieResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 interface MovieAPI {
     @GET("movie/popular")
-    fun getMovieListPopular(@Query(ApiParams.PAGE) page: Int): Single<GetMovieResponse>
+    fun getMovieListPopular(@Query(ApiParams.PAGE) page: Int): Single<MovieResponse>
 }
 
 object ApiParams {
