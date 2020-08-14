@@ -44,4 +44,8 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
             })
         }
     }
+
+    companion object {
+        fun newInstance() = PopularFragment()
+    }
 }
