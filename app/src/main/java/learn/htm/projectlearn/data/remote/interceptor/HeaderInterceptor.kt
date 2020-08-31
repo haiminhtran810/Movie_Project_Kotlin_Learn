@@ -13,11 +13,11 @@ class HeaderInterceptor : Interceptor {
             "api_key",
             BuildConfig.API_KEY
         ).build()
-        request = request?.newBuilder()
-            ?.url(newUrl)
-            ?.addHeader("Content-Type", "application/json")
+        request = request.newBuilder()
+            .url(newUrl)
+            .addHeader("Content-Type", "application/json")
             //?.apply { token?.token?.let { addHeader("Authorization", "Bearer $it") } }
-            ?.method(request.method, request.body)?.build()
+            .method(request.method, request.body).build()
         return chain.proceed(request)
     }
 

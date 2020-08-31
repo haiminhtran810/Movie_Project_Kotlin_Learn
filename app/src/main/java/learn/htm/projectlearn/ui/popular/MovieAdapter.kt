@@ -28,7 +28,7 @@ class MovieAdapter(private val onClickMovie: (Movie) -> Unit?) :
         super.bindFirstTime(binding)
         if (binding is ItemMovieBinding) {
             binding.item?.let {
-                onClickMovie?.invoke(it)
+                onClickMovie.invoke(it)
             }
         }
     }

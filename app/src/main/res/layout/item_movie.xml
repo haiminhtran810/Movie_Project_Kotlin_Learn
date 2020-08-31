@@ -23,15 +23,23 @@
             android:layout_height="wrap_content"
             android:padding="@dimen/dp_10">
 
-            <androidx.appcompat.widget.AppCompatImageView
-                android:id="@+id/imageViewMovie"
-                imageUrl="@{item.imageLink}"
-                android:layout_width="@dimen/dp_77"
-                android:layout_height="@dimen/dp_110"
-                android:scaleType="centerCrop"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardViewImage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:cardCornerRadius="@dimen/dp_5"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:src="@drawable/ic_no_image" />
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageViewMovie"
+                    imageUrl="@{item.imageLink}"
+                    android:layout_width="@dimen/dp_77"
+                    android:layout_height="@dimen/dp_110"
+                    android:scaleType="centerCrop"
+                    tools:src="@drawable/ic_no_image" />
+            </androidx.cardview.widget.CardView>
 
             <com.google.android.material.textview.MaterialTextView
                 android:id="@+id/textTitleMovie"
@@ -46,7 +54,7 @@
                 android:textSize="@dimen/sp_18"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/imageViewMovie"
+                app:layout_constraintStart_toEndOf="@+id/cardViewImage"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Beauty and the beast - Beauty and the beast - Beauty and the beast" />
 
