@@ -10,7 +10,7 @@ class HeaderInterceptor : Interceptor {
 
         var request = chain.request()
         val newUrl = request.url.newBuilder().addQueryParameter(
-            "api_key",
+            API_KEY,
             BuildConfig.API_KEY
         ).build()
         request = request.newBuilder()

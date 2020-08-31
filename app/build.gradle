@@ -51,15 +51,14 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation deps.kotlin.stdlib
-    implementation 'androidx.core:core-ktx:1.3.1'
-    implementation 'androidx.appcompat:appcompat:1.1.0'
+    implementation deps.ktx
+    implementation deps.appcompat
     implementation deps.constraintlayout
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation deps.testJunit
+    androidTestImplementation deps.junit
+    androidTestImplementation deps.espresso
 
-    implementation "androidx.preference:preference-ktx:1.1.1"
-    implementation 'androidx.core:core:1.3.1'
+    implementation deps.preference
 
     // Lifecycle
     implementation deps.lifecycle.extensions
@@ -69,62 +68,63 @@ dependencies {
     implementation deps.lifecycle.common
 
     // Kotlin Coroutines
-    deps.coroutines.core
-    deps.coroutines.android
+    implementation deps.coroutines.core
+    implementation deps.coroutines.android
 
     // Koin AndroidX Scope features
-    implementation "org.koin:koin-androidx-scope:2.1.6"
+    implementation deps.koin.scope
     // Koin AndroidX ViewModel features
-    implementation "org.koin:koin-androidx-viewmodel:2.1.6"
+    implementation deps.koin.viewmodel
     // Koin AndroidX Fragment features
-    implementation "org.koin:koin-androidx-fragment:2.1.6"
+    implementation deps.koin.fragment
     // Koin AndroidX Experimental features
-    implementation "org.koin:koin-androidx-ext:2.1.6"
+    implementation deps.koin.ext
 
     // Retrofit 2 & Moshi
-    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
-    implementation 'com.squareup.retrofit2:converter-moshi:2.9.0'
-    implementation 'com.squareup.retrofit2:retrofit-mock:2.9.0'
-    implementation 'com.squareup.moshi:moshi:1.9.3'
-    implementation 'com.squareup.moshi:moshi-kotlin:1.9.3'
-    implementation 'com.squareup.moshi:moshi-adapters:1.9.3'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.2.0'
-    kapt 'com.squareup.moshi:moshi-kotlin-codegen:1.9.3'
+    implementation deps.retrofit.retrofit
+    implementation deps.retrofit.converter
+    implementation deps.retrofit.mock
+    implementation deps.retrofit.rxjava2
 
-    implementation 'com.google.android.material:material:1.1.0'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    // Moshi
+    implementation deps.moshi.moshi
+    implementation deps.moshi.kotlin
+    implementation deps.moshi.adapters
+    kapt deps.moshi.codegen
+
+    implementation deps.material
+    implementation deps.support
 
     // OkHttp 3
     implementation deps.okhttp3.okhttp
     implementation deps.okhttp3.logging
 
     // Rx
-    implementation 'io.reactivex.rxjava2:rxjava:2.2.19'
-    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
+    implementation deps.reactivex.rxjava
+    implementation deps.reactivex.rxandroid
 
     // Room Database Library
-    implementation "androidx.room:room-runtime:2.2.5"
-    kapt "androidx.room:room-compiler:2.2.5"
+    implementation deps.room.runtime
+    kapt deps.room.compiler
     // optional - Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:2.2.5"
+    implementation deps.room.ktx
     // optional - RxJava support for Room
-    implementation "androidx.room:room-rxjava2:2.2.5"
-
+    implementation deps.room.rxjava2
 
     //Timber
     implementation deps.timber
 
-    //Image
-    implementation 'com.github.bumptech.glide:glide:4.11.0'
-    kapt 'com.github.bumptech.glide:compiler:4.11.0'
-    implementation 'jp.wasabeef:glide-transformations:4.0.1'
+    implementation deps.paging
 
-    implementation 'androidx.paging:paging-runtime-ktx:2.1.2'
+    implementation deps.circleimageview
 
-    implementation 'de.hdodenhof:circleimageview:3.1.0'
+    implementation deps.gson
 
-    implementation 'com.google.code.gson:gson:2.8.6'
+    // Glide
 
+    implementation deps.glide.glide
+    implementation deps.glide.transformations
+    kapt deps.glide.compiler
 
     // Kotlin
     implementation deps.navigation.fragment
