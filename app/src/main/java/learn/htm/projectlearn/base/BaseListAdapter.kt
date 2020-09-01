@@ -18,7 +18,7 @@ abstract class BaseListAdapter<T>(
         parent: ViewGroup,
         viewType: Int
     ): BaseViewHolder<ViewDataBinding> = BaseViewHolder(createBinding(parent, viewType)).apply {
-        bindFirstTime(binding)
+        bindFirstTime(binding, layoutPosition)
     }
 
     override fun onBindViewHolder(holder: BaseViewHolder<ViewDataBinding>, position: Int) {
@@ -29,7 +29,7 @@ abstract class BaseListAdapter<T>(
      * bind first time
      * use for set item onClickListener, something only set one time
      */
-    protected open fun bindFirstTime(binding: ViewDataBinding) {}
+    protected open fun bindFirstTime(binding: ViewDataBinding, position: Int) {}
 
     protected abstract fun createBinding(parent: ViewGroup, viewType: Int? = 0): ViewDataBinding
 

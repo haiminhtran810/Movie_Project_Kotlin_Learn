@@ -3,10 +3,12 @@ package learn.htm.projectlearn.ui.home
 import android.os.Bundle
 import android.view.View
 import androidx.core.content.ContextCompat
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.tabs.TabLayoutMediator
 import learn.htm.projectlearn.R
 import learn.htm.projectlearn.base.BaseFragment
 import learn.htm.projectlearn.databinding.FragmentHomeBinding
+import learn.htm.projectlearn.model.Movie
 import learn.htm.projectlearn.ui.home.adapter.HomeViewPagerAdapter
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -59,6 +61,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 setCurrentItem(0, true)
             }
         }
+    }
+
+    fun navigationMovieDetailFragment(movie: Movie) {
+        findNavController().navigate(
+            HomeFragmentDirections.actionHomeFragmentToMovieDetailFragment(
+                movie = movie
+            )
+        )
     }
 
     companion object {
