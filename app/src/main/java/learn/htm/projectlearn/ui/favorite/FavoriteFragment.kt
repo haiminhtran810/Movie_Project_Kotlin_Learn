@@ -1,22 +1,17 @@
 package learn.htm.projectlearn.ui.favorite
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import learn.htm.projectlearn.R
+import learn.htm.projectlearn.base.BaseFragment
+import learn.htm.projectlearn.databinding.FragmentFavoriteBinding
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class FavoriteFragment : Fragment() {
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        return inflater.inflate(R.layout.fragment_favorite, container, false)
-    }
-
+class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel>() {
+    override val viewModel: FavoriteViewModel by viewModel()
+    override val layoutId: Int
+        get() = R.layout.fragment_favorite
 
     companion object {
         fun newInstance() = FavoriteFragment()
     }
+
 }

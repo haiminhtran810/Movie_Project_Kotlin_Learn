@@ -24,15 +24,6 @@ class MovieAdapter(private val onClickMovie: (Movie) -> Unit?) :
         }
     }
 
-    override fun bindFirstTime(binding: ViewDataBinding) {
-        super.bindFirstTime(binding)
-        if (binding is ItemMovieBinding) {
-            binding.item?.let {
-                onClickMovie.invoke(it)
-            }
-        }
-    }
-
     override fun createBinding(parent: ViewGroup, viewType: Int?): ViewDataBinding {
         return DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
@@ -42,11 +33,14 @@ class MovieAdapter(private val onClickMovie: (Movie) -> Unit?) :
         )
     }
 
-    override fun bind(binding: ViewDataBinding, item: Movie, position: Int) {
+    override fun bind(binding: ViewDataBinding, movie: Movie, position: Int) {
         if (binding is ItemMovieBinding) {
-            binding.item = item
+            binding.apply {
+                item = movie
+                root.setOnClickListener {
+                    onClickMovie?.invoke(movie)
+                }
+            }
         }
     }
-
-
 }

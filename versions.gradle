@@ -51,6 +51,7 @@ navigation.fragment = "androidx.navigation:navigation-fragment-ktx:$versions.nav
 navigation.ktx = "androidx.navigation:navigation-ui-ktx:$versions.navigation"
 navigation.features = "androidx.navigation:navigation-dynamic-features-fragment:$versions.navigation"
 navigation.testing = "androidx.navigation:navigation-testing:$versions.navigation"
+navigation.safe = "androidx.navigation:navigation-safe-args-gradle-plugin:$versions.navigation"
 deps.navigation = navigation
 
 def coroutines = [:]
