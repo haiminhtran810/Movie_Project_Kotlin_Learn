@@ -2,11 +2,13 @@ package learn.htm.projectlearn.ui.popular
 
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import com.google.android.material.appbar.AppBarLayout
 import learn.htm.projectlearn.R
 import learn.htm.projectlearn.base.BaseFragment
 import learn.htm.projectlearn.databinding.FragmentPopularBinding
 import learn.htm.projectlearn.ui.home.HomeFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import kotlin.math.abs
 
 class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>() {
 
@@ -30,6 +32,13 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
                     refreshData()
                 }
             }
+            appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
+                if (isAdded) {
+                    val alpha =
+                        (appBarLayout.totalScrollRange - abs(verticalOffset)) / (appBarLayout.totalScrollRange * 1.0F)
+
+                }
+            })
         }
         viewModel.apply {
             if (listItem.value.isNullOrEmpty()) {
