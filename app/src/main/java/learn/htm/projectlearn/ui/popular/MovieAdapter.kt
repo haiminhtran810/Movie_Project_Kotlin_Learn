@@ -1,12 +1,14 @@
 package learn.htm.projectlearn.ui.popular
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import learn.htm.projectlearn.R
 import learn.htm.projectlearn.base.BaseListAdapter
+import learn.htm.projectlearn.binding.setOnSingleClickListener
 import learn.htm.projectlearn.databinding.ItemMovieBinding
 import learn.htm.projectlearn.model.Movie
 
@@ -33,13 +35,20 @@ class MovieAdapter(private val onClickMovie: (Movie) -> Unit?) :
         )
     }
 
+    override fun bindFirstTime(binding: ViewDataBinding, position: Int) {
+        super.bindFirstTime(binding, position)
+        binding.root.setOnSingleClickListener(View.OnClickListener {
+            //onClickMovie?.invoke(movie)
+        })
+    }
+
     override fun bind(binding: ViewDataBinding, movie: Movie, position: Int) {
         if (binding is ItemMovieBinding) {
             binding.apply {
                 item = movie
-                root.setOnClickListener {
+                root.setOnSingleClickListener(View.OnClickListener {
                     onClickMovie?.invoke(movie)
-                }
+                })
             }
         }
     }

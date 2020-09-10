@@ -3,6 +3,7 @@ package learn.htm.projectlearn.binding
 import android.content.Context
 import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
+import android.view.View
 import android.widget.ImageView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -12,6 +13,7 @@ import com.bumptech.glide.request.RequestListener
 import com.google.android.material.chip.Chip
 import com.google.android.material.chip.ChipGroup
 import learn.htm.projectlearn.R
+import java.util.concurrent.atomic.AtomicBoolean
 
 @BindingAdapter(value = ["imageUrl", "imageRequestListener"], requireAll = false)
 fun ImageView.bindImage(url: String?, listener: RequestListener<Drawable?>?) {
@@ -53,5 +55,30 @@ fun SwipeRefreshLayout.customRefreshing(refreshing: Boolean?) {
 @BindingAdapter("onScrollListener")
 fun RecyclerView.customScrollListener(listener: RecyclerView.OnScrollListener?) {
     if (listener != null) addOnScrollListener(listener)
+}
+
+@BindingAdapter("onSingleClick")
+fun View.setOnSingleClickListener(clickListener: View.OnClickListener?) {
+    clickListener?.also {
+        setOnClickListener(OnSingleClickListener(it))
+    } ?: setOnClickListener(null)
+}
+
+class OnSingleClickListener(
+    private val clickListener: View.OnClickListener,
+    private val intervalMs: Long = 1000
+) : View.OnClickListener {
+    private var canClick = AtomicBoolean(true)
+
+    override fun onClick(v: View?) {
+        if (canClick.getAndSet(false)) {
+            v?.run {
+                postDelayed({
+                    canClick.set(true)
+                }, intervalMs)
+                clickListener.onClick(v)
+            }
+        }
+    }
 }
 
