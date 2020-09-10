@@ -28,6 +28,7 @@ versions.rxandroid = "2.1.1"
 versions.room = "2.2.5"
 versions.glide = "4.11.0"
 versions.transformations = "4.0.1"
+versions.datastore = "1.0.0-alpha01"
 ext.versions = versions
 
 def kotlin = [:]
@@ -113,6 +114,11 @@ glide.glide = "com.github.bumptech.glide:glide:$versions.glide"
 glide.compiler = "com.github.bumptech.glide:compiler:$versions.glide"
 glide.transformations = "jp.wasabeef:glide-transformations:$versions.transformations"
 deps.glide = glide
+
+def datastore = [:]
+datastore.preferences = "androidx.datastore:datastore-preferences:$versions.datastore"
+datastore.proto  = "androidx.datastore:datastore-core:$versions.datastore"
+deps.datastore = datastore
 
 deps.timber = "com.jakewharton.timber:timber:$versions.timber"
 
