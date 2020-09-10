@@ -48,6 +48,7 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
     }
 
     override fun observeEvent() {
+        super.observeEvent()
         viewModel.apply {
             listItem.observe(viewLifecycleOwner, Observer {
                 movieAdapter?.submitList(it)
