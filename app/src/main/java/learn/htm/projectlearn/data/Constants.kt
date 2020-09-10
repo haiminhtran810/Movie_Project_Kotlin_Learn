@@ -1,7 +1,9 @@
 package learn.htm.projectlearn.data
 
 object Constants {
-    const val DATABASE_NAME = "example.db"
+    const val DATABASE_NAME = "movie.db"
+    const val VERSION_DB = 1
+
     const val APP_WEB_VIEW = " APP_WEB_VIEW"
     const val PREF_FIREBASE_TOKEN = "firebase_token"
 

@@ -124,7 +124,6 @@ deps.testJunit = "junit:junit:$versions.testJunit"
 
 deps.preference = "androidx.preference:preference-ktx:$versions.preference"
 
-
 ext.deps = deps
 
 def addRepos(RepositoryHandler handler) {

@@ -24,7 +24,7 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
         movieAdapter = MovieAdapter {
             getHomeFragment()?.navigationMovieDetailFragment(it)
         }
-        viewDataBinding.apply {
+        viewBinding.apply {
             recyclerMovie.adapter = movieAdapter
             swipeRefreshLayout.setOnRefreshListener {
                 viewModel?.apply {

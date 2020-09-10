@@ -1,6 +1,7 @@
 package learn.htm.projectlearn.di
 
 import learn.htm.projectlearn.ui.MainViewModel
+import learn.htm.projectlearn.ui.ShareViewModel
 import learn.htm.projectlearn.ui.detail.MovieDetailViewModel
 import learn.htm.projectlearn.ui.favorite.FavoriteViewModel
 import learn.htm.projectlearn.ui.home.HomeViewModel
@@ -12,6 +13,7 @@ val viewModelModule = module {
     viewModel { MainViewModel() }
     viewModel { HomeViewModel(get()) }
     viewModel { PopularViewModel(get()) }
-    viewModel { FavoriteViewModel() }
+    viewModel { FavoriteViewModel(get()) }
     viewModel { MovieDetailViewModel(get()) }
+    viewModel { ShareViewModel() }
 }

@@ -16,8 +16,7 @@ import java.net.HttpURLConnection
 import java.net.SocketTimeoutException
 import java.net.UnknownHostException
 
-abstract class BaseViewModel :
-    ViewModel() {
+abstract class BaseViewModel : ViewModel() {
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
     val snackBarMessage = MutableLiveData<String>()
     val toastMessage = MutableLiveData<String>()

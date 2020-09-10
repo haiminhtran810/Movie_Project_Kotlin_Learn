@@ -27,7 +27,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     }
 
     private fun setUpNavigation() {
-        viewDataBinding.apply {
+        viewBinding.apply {
             homeViewPagerAdapter = HomeViewPagerAdapter(requireParentFragment())
             viewPager.apply {
                 offscreenPageLimit = 1

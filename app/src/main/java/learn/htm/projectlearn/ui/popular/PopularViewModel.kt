@@ -7,6 +7,7 @@ import learn.htm.projectlearn.utils.RxUtils
 
 class PopularViewModel(private val movieRepository: MovieRepository) :
     BaseLoadMoreRefreshViewModel<Movie>() {
+
     private fun getMovies(page: Int) {
         addDisposable(
             movieRepository.getMovieListPopular(page)
@@ -15,6 +16,7 @@ class PopularViewModel(private val movieRepository: MovieRepository) :
                     onLoadSuccess(page, it)
                 }, {
                     onError(it)
+                    isRefreshing.value = false
                 })
         )
     }

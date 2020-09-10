@@ -5,7 +5,7 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import learn.htm.projectlearn.data.Constants
 import learn.htm.projectlearn.widgets.EndlessRecyclerOnScrollListener
 
-abstract class BaseLoadMoreRefreshViewModel<Item>() : BaseViewModel() {
+abstract class BaseLoadMoreRefreshViewModel<Item> : BaseViewModel() {
 
     // refresh flag
     val isRefreshing = MutableLiveData<Boolean>().apply { value = false }
@@ -86,7 +86,7 @@ abstract class BaseLoadMoreRefreshViewModel<Item>() : BaseViewModel() {
     /**
      * load next page
      */
-    fun loadMore() {
+    private fun loadMore() {
         loadData(currentPage.value?.plus(1) ?: getFirstPage())
     }
 
@@ -100,7 +100,7 @@ abstract class BaseLoadMoreRefreshViewModel<Item>() : BaseViewModel() {
     /**
      * override if need change number visible threshold
      */
-    open fun getLoadMoreThreshold() = Constants.DEFAULT_NUM_VISIBLE_THRESHOLD
+    fun getLoadMoreThreshold() = Constants.DEFAULT_NUM_VISIBLE_THRESHOLD
 
     /**
      * override if need change number item per page

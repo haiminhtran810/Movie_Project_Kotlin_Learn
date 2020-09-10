@@ -11,10 +11,11 @@
         android:layout_height="match_parent"
         tools:context=".ui.detail.MovieDetailFragment">
 
-        <TextView
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/buttonInsert"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Movie Detail Fragment" />
+            android:text="Insert" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

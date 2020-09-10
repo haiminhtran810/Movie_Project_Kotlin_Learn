@@ -13,11 +13,13 @@ import androidx.lifecycle.Observer
 import learn.htm.projectlearn.BR
 import learn.htm.projectlearn.R
 import learn.htm.projectlearn.extension.showDialog
-import learn.htm.projectlearn.utils.autoCleared
 
-abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment() {
-    abstract val viewModel: V
-    var viewDataBinding by autoCleared<T>()
+abstract class BaseFragment<ViewBinding : ViewDataBinding, ViewModel : BaseViewModel> : Fragment() {
+
+    protected lateinit var viewBinding: ViewBinding
+
+    protected abstract val viewModel: ViewModel
+
     private var errorMessageDialog: AlertDialog? = null
 
     @get:LayoutRes
@@ -28,19 +30,20 @@ abstract class BaseFragment<T : ViewDataBinding, V : BaseViewModel> : Fragment()
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        viewDataBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
-        return viewDataBinding.root
+        viewBinding = DataBindingUtil.inflate(inflater, layoutId, container, false)
+        return viewBinding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewDataBinding.apply {
+        viewBinding.apply {
             setVariable(BR.viewModel, viewModel)
             executePendingBindings()
-            lifecycleOwner = this@BaseFragment
         }
+        viewBinding.lifecycleOwner = viewLifecycleOwner
         observeEvent()
     }
+
 
     protected open fun observeEvent() {
         viewModel.apply {

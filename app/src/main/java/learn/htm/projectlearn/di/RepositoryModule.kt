@@ -5,5 +5,5 @@ import learn.htm.projectlearn.data.remote.repository.movie.MovieRepositoryImpl
 import org.koin.dsl.module
 
 val repositoryModule = module {
-    single<MovieRepository> { MovieRepositoryImpl(get()) }
+    single<MovieRepository> { MovieRepositoryImpl(get(), get()) }
 }
