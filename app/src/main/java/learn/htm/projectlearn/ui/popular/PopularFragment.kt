@@ -1,5 +1,10 @@
 package learn.htm.projectlearn.ui.popular
 
+import android.content.Context
+import android.net.ConnectivityManager
+import android.net.Network
+import android.net.NetworkCapabilities
+import android.net.NetworkRequest
 import android.os.Bundle
 import androidx.lifecycle.Observer
 import com.google.android.material.appbar.AppBarLayout
@@ -18,6 +23,7 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
         get() = R.layout.fragment_popular
 
     private var movieAdapter: MovieAdapter? = null
+    private var connectivityManager: ConnectivityManager? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
@@ -67,5 +73,34 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
 
     companion object {
         fun newInstance() = PopularFragment()
+    }
+
+    fun checkNetWork() {
+        connectivityManager =
+            requireContext().applicationContext.getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+        val networkRequest = NetworkRequest.Builder()
+            .addTransportType(NetworkCapabilities.TRANSPORT_WIFI)
+            .build()
+
+        connectivityManager?.registerNetworkCallback(networkRequest, networkCallback)
+    }
+
+    private var networkCallback = object : ConnectivityManager.NetworkCallback() {
+        override fun onLost(network: Network) {
+            super.onLost(network)
+        }
+
+        override fun onUnavailable() {
+
+        }
+
+        override fun onLosing(network: Network, maxMsToLive: Int) {
+            super.onLosing(network, maxMsToLive)
+        }
+
+        override fun onAvailable(network: Network) {
+            super.onAvailable(network)
+        }
+
     }
 }
