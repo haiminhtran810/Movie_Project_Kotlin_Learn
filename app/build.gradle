@@ -30,7 +30,6 @@ android {
         def ORIGINAL_IMAGE_URL = "https://image.tmdb.org/t/p/original"
         def API_KEY = "3e047b2cc8fc38537ee7b3e6f547e53c"
 
-
         debug {
             buildConfigField("String", "API_URL", "\"${API_URL}\"")
             buildConfigField("String", "SMALL_IMAGE_URL", "\"${SMALL_IMAGE_URL}\"")
@@ -145,5 +144,11 @@ dependencies {
     implementation deps.datastore.preferences
     // Proto DataStore
     implementation deps.datastore.proto
+
+    // Exoplayer
+    implementation deps.exoplayer.exoplayer
+    implementation deps.exoplayer.core
+    implementation deps.exoplayer.dash
+    implementation deps.exoplayer.ui
 
 }

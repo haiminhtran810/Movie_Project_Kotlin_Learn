@@ -7,6 +7,7 @@ import learn.htm.projectlearn.R
 import learn.htm.projectlearn.base.BaseFragment
 import learn.htm.projectlearn.databinding.FragmentFavoriteBinding
 import learn.htm.projectlearn.ui.ShareViewModel
+import learn.htm.projectlearn.ui.home.HomeFragment
 import learn.htm.projectlearn.ui.popular.MovieAdapter
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -31,7 +32,9 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
     }
 
     private fun initAdapter() {
-        movieAdapter = MovieAdapter { }
+        movieAdapter = MovieAdapter {
+            getHomeFragment()?.navigationMovieDetailFragment(it)
+        }
         viewBinding.recyclerMovies.adapter = movieAdapter
     }
 
@@ -48,6 +51,15 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
                 viewModel.getMoviesLocal()
             })
         }
+    }
+
+    private fun getHomeFragment(): HomeFragment? {
+        for (fragment in parentFragmentManager.fragments) {
+            if (fragment is HomeFragment) {
+                return fragment
+            }
+        }
+        return null
     }
 
     companion object {

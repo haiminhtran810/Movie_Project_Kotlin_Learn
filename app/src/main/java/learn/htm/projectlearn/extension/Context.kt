@@ -9,6 +9,7 @@ import androidx.appcompat.app.AlertDialog
 val Context.networkInfo: NetworkInfo?
     get() = (this.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager).activeNetworkInfo
 
+
 fun Context.showDialog(
     title: String? = null,
     message: String? = null,
