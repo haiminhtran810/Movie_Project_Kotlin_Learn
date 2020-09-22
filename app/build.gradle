@@ -119,7 +119,11 @@ dependencies {
     //Timber
     implementation deps.timber
 
-    implementation deps.paging
+    // Paging 3.0
+    implementation deps.paging.runtime
+    implementation deps.paging.common
+    implementation deps.paging.rxjava2
+    implementation deps.paging.guava
 
     implementation deps.circleimageview
 
