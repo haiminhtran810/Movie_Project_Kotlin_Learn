@@ -12,7 +12,7 @@ import org.koin.dsl.module
 
 val viewModelModule = module {
     viewModel { MainViewModel() }
-    viewModel { HomeViewModel(get()) }
+    viewModel { HomeViewModel() }
     viewModel { PopularViewModel(get()) }
     viewModel { FavoriteViewModel(get()) }
     viewModel { MovieDetailViewModel(get()) }

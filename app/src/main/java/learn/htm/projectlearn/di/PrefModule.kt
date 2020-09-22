@@ -5,6 +5,7 @@ import android.content.SharedPreferences
 import androidx.room.Room
 import learn.htm.projectlearn.data.Constants.DATABASE_NAME
 import learn.htm.projectlearn.data.local.dao.db.AppDatabase
+import learn.htm.projectlearn.data.local.datastore.AppDataStorePreferences
 import learn.htm.projectlearn.data.local.pref.AppPrefs
 import org.koin.dsl.module
 
@@ -13,6 +14,7 @@ val prefModule = module {
     single { AppPrefs() }
     single { createAppDatabase(get()) }
     single { createMovieDao(get()) }
+    single { AppDataStorePreferences(get()) }
 }
 
 fun createSharedPrefs(context: Context): SharedPreferences =

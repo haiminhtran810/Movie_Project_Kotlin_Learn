@@ -1,19 +1,15 @@
 package learn.htm.projectlearn.ui.popular
 
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import learn.htm.projectlearn.R
-import learn.htm.projectlearn.base.BaseListAdapter
+import learn.htm.projectlearn.base.BasePagedListAdapter
 import learn.htm.projectlearn.binding.setOnSingleClickListener
 import learn.htm.projectlearn.databinding.ItemMovieBinding
 import learn.htm.projectlearn.model.Movie
 
-class MovieAdapter(private val onClickMovie: (Movie) -> Unit?) :
-    BaseListAdapter<Movie>(callBack) {
+class MovieAdapter(private val onClickMovie: (Movie?) -> Unit?) :
+    BasePagedListAdapter<Movie, ItemMovieBinding>(callBack) {
     companion object {
         val callBack = object : DiffUtil.ItemCallback<Movie>() {
             override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
@@ -26,30 +22,18 @@ class MovieAdapter(private val onClickMovie: (Movie) -> Unit?) :
         }
     }
 
-    override fun createBinding(parent: ViewGroup, viewType: Int?): ViewDataBinding {
-        return DataBindingUtil.inflate(
-            LayoutInflater.from(parent.context),
-            R.layout.item_movie,
-            parent,
-            false
-        )
-    }
+    override fun getLayoutRes(viewType: Int): Int = R.layout.item_movie
 
-    override fun bindFirstTime(binding: ViewDataBinding, position: Int) {
-        super.bindFirstTime(binding, position)
-        binding.root.setOnSingleClickListener(View.OnClickListener {
-            //onClickMovie?.invoke(movie)
-        })
-    }
-
-    override fun bind(binding: ViewDataBinding, movie: Movie, position: Int) {
-        if (binding is ItemMovieBinding) {
-            binding.apply {
-                item = movie
-                root.setOnSingleClickListener(View.OnClickListener {
-                    onClickMovie?.invoke(movie)
-                })
-            }
+    override fun bindView(binding: ItemMovieBinding, any: Any, position: Int) {
+        super.bindView(binding, any, position)
+        binding.apply {
+            val movie = any as? Movie
+            item = movie
+            root.setOnSingleClickListener(View.OnClickListener {
+                onClickMovie.invoke(movie)
+            })
         }
+
     }
+
 }

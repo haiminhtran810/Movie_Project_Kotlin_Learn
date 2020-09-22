@@ -20,7 +20,7 @@ versions.testJunit = "4.12"
 versions.preference = "1.1.1"
 versions.support = "1.0.0"
 versions.material = "1.1.0"
-versions.paging = "2.1.2"
+versions.paging = "3.0.0-alpha06"
 versions.circleimageview = "3.1.0"
 versions.gson = "2.8.6"
 versions.rxjava = "2.2.19"
@@ -43,10 +43,15 @@ deps.ktx = "androidx.core:core-ktx:$versions.ktx"
 deps.appcompat = "androidx.appcompat:appcompat:$versions.appcompat"
 deps.material = "com.google.android.material:material:$versions.material"
 deps.support = "androidx.legacy:legacy-support-v4:$versions.support"
-deps.paging = "androidx.paging:paging-runtime-ktx:$versions.paging"
 deps.circleimageview = "de.hdodenhof:circleimageview:$versions.circleimageview"
 deps.gson = "com.google.code.gson:gson:$versions.gson"
 
+def paging = [:]
+paging.runtime = "androidx.paging:paging-runtime:$versions.paging"
+paging.common = "androidx.paging:paging-common:$versions.paging"
+paging.rxjava2 = "androidx.paging:paging-rxjava2:$versions.paging"
+paging.guava = "androidx.paging:paging-guava:$versions.paging"
+deps.paging = paging
 
 def navigation = [:]
 navigation.fragment = "androidx.navigation:navigation-fragment-ktx:$versions.navigation"

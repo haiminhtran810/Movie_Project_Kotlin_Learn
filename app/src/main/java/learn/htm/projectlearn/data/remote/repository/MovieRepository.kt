@@ -1,12 +1,14 @@
 package learn.htm.projectlearn.data.remote.repository
 
+import androidx.paging.PagingData
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Single
 import learn.htm.projectlearn.model.Movie
 
 interface MovieRepository {
 
-    fun getMovieListPopular(page: Int): Single<List<Movie>>
+    fun getMovieListPopular(): Flowable<PagingData<Movie>>
 
     // Database
     fun updateMovieLocal(movie: Movie): Completable
