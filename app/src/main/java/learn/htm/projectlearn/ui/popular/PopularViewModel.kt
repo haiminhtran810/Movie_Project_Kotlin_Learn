@@ -15,9 +15,7 @@ class PopularViewModel(private val movieRepository: MovieRepository) :
             movieRepository.getMovieListPopular().compose(RxUtils.applyFlowableScheduler())
                 .subscribe({
                     movie.value = it
-                }, {
-                    onError(it)
-                })
+                }, {})
         )
     }
 }

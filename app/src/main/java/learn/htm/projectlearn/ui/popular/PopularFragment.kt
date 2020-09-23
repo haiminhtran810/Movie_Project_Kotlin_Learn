@@ -7,6 +7,7 @@ import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.os.Bundle
 import androidx.lifecycle.Observer
+import androidx.paging.LoadState
 import com.google.android.material.appbar.AppBarLayout
 import learn.htm.projectlearn.R
 import learn.htm.projectlearn.base.BaseFragment
@@ -31,6 +32,23 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
         movieAdapter = MovieAdapter {
             navigationMovieDetail(it)
         }
+
+        // https://medium.com/@yash786agg/jetpack-paging-3-0-android-bae37a56b92d
+        movieAdapter?.addLoadStateListener { loadState ->
+            // If we have an error, show a toast
+            val errorState = when {
+                loadState.append is LoadState.Error -> loadState.append as LoadState.Error
+                loadState.prepend is LoadState.Error -> loadState.prepend as LoadState.Error
+                loadState.refresh is LoadState.Error -> loadState.refresh as LoadState.Error
+                else -> null
+            }
+            errorState?.let {
+                viewModel.onError(it.error)
+            }
+
+
+        }
+
         viewBinding.apply {
             recyclerMovie.adapter = movieAdapter
             swipeRefreshLayout.setOnRefreshListener {
