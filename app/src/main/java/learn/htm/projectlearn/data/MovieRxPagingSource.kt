@@ -14,17 +14,17 @@ class MovieRxPagingSource(private val movieAPI: MovieAPI) : RxPagingSource<Int, 
         return movieAPI.getMovieListPopular(pageIndex)
             .subscribeOn(Schedulers.io())
             .map {
-                toLoadResult(it, position = pageIndex)
+                toLoadResult(it, pageIndex = pageIndex)
             }.onErrorReturn {
                 LoadResult.Error(it)
             }
     }
 
-    private fun toLoadResult(data: MovieResponse, position: Int): LoadResult<Int, Movie> {
+    private fun toLoadResult(data: MovieResponse, pageIndex: Int): LoadResult<Int, Movie> {
         return Page(
             data = data.results ?: emptyList(),
-            prevKey = null,
-            nextKey = if (position == data.totalPages) null else position + 1
+            prevKey = if (pageIndex == Constants.DEFAULT_FIRST_PAGE) null else pageIndex - 1,
+            nextKey = if (pageIndex == data.totalPages) null else pageIndex + 1
         )
     }
 }
