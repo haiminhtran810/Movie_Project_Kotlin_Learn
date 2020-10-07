@@ -11,16 +11,16 @@ package learn.htm.projectlearn.service
 * You can use JobIntentService as a replacement for IntentService that is compatible with newer versions of Android.
 * */
 
-import android.app.Service
 import android.content.Intent
 import android.os.Binder
+import android.os.Bundle
 import android.os.IBinder
+import android.support.v4.media.MediaBrowserCompat
+import learn.htm.projectlearn.base.BaseService
 import timber.log.Timber
 import java.util.*
 
-class MusicPlayService : Service() {
-
-    private var startMode: Int = 0
+class MusicPlayService : BaseService() {
     private var allowRebind: Boolean = false
 
     // Binder given to clients
@@ -68,6 +68,21 @@ class MusicPlayService : Service() {
     override fun onRebind(intent: Intent?) {
         Timber.d("MusicPlayService: onRebind")
         super.onRebind(intent)
+    }
+
+    override fun onGetRoot(
+        clientPackageName: String,
+        clientUid: Int,
+        rootHints: Bundle?
+    ): BrowserRoot? {
+        TODO("Not yet implemented")
+    }
+
+    override fun onLoadChildren(
+        parentId: String,
+        result: Result<MutableList<MediaBrowserCompat.MediaItem>>
+    ) {
+        TODO("Not yet implemented")
     }
 
     override fun onDestroy() {

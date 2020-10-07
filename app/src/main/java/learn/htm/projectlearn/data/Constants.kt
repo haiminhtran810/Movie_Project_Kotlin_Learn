@@ -65,3 +65,7 @@ object Authentication {
     const val X_FIVE_G_PROMOTION_ACCESS_TOKEN = "X-ACCESSTOKEN"
     const val CHECK_VERSION_STATUS_OK = "OK"
 }
+
+object Network {
+    const val CONNECTIVITY_ACTION = "CONNECTIVITY_ACTION"
+}

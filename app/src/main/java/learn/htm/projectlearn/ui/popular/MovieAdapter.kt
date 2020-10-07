@@ -10,17 +10,6 @@ import learn.htm.projectlearn.model.Movie
 
 class MovieAdapter(private val onClickMovie: (Movie?) -> Unit?) :
     BasePagedListAdapter<Movie, ItemMovieBinding>(callBack) {
-    companion object {
-        val callBack = object : DiffUtil.ItemCallback<Movie>() {
-            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-                return oldItem == newItem
-            }
-
-            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
-                return oldItem.id == newItem.id
-            }
-        }
-    }
 
     override fun getLayoutRes(viewType: Int): Int = R.layout.item_movie
 
@@ -33,7 +22,18 @@ class MovieAdapter(private val onClickMovie: (Movie?) -> Unit?) :
                 onClickMovie.invoke(movie)
             })
         }
+    }
 
+    companion object {
+        val callBack = object : DiffUtil.ItemCallback<Movie>() {
+            override fun areItemsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+                return oldItem == newItem
+            }
+
+            override fun areContentsTheSame(oldItem: Movie, newItem: Movie): Boolean {
+                return oldItem.id == newItem.id
+            }
+        }
     }
 
 }

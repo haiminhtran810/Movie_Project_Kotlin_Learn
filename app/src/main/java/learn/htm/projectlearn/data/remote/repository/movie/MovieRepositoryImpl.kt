@@ -19,19 +19,12 @@ class MovieRepositoryImpl(private val movieAPI: MovieAPI, private val movieDao: 
 
     override fun getMovieListPopular(): Flowable<PagingData<Movie>> {
         return Pager(
-            config = PagingConfig(
-                pageSize = Constants.DEFAULT_ITEM_PER_PAGE,
-                enablePlaceholders = false,
-                maxSize = 30,
-                prefetchDistance = 5,
-                initialLoadSize = 40
-            ),
+            config = PagingConfig(pageSize = Constants.DEFAULT_ITEM_PER_PAGE),
             pagingSourceFactory = {
                 MovieRxPagingSource(movieAPI)
             }
         ).flowable
     }
-
 
     override fun updateMovieLocal(movie: Movie): Completable {
         return Completable.create {
