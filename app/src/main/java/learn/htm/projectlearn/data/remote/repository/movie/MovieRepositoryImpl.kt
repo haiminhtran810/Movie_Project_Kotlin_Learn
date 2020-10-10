@@ -13,6 +13,7 @@ import learn.htm.projectlearn.data.local.dao.MovieDao
 import learn.htm.projectlearn.data.remote.api.MovieAPI
 import learn.htm.projectlearn.data.remote.repository.MovieRepository
 import learn.htm.projectlearn.model.Movie
+import learn.htm.projectlearn.model.Videos
 
 class MovieRepositoryImpl(private val movieAPI: MovieAPI, private val movieDao: MovieDao) :
     MovieRepository {
@@ -24,6 +25,14 @@ class MovieRepositoryImpl(private val movieAPI: MovieAPI, private val movieDao: 
                 MovieRxPagingSource(movieAPI)
             }
         ).flowable
+    }
+
+    override fun getMovieDetail(movieId: String): Single<Movie> {
+        return movieAPI.getMovieDetail(movieId)
+    }
+
+    override fun getVideos(movieId: String): Single<Videos> {
+        return movieAPI.getVideos(movieId)
     }
 
     override fun updateMovieLocal(movie: Movie): Completable {

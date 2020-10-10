@@ -22,6 +22,13 @@ data class Movie(
     @Json(name = "adult")
     val adult: Boolean? = false,
 
+    @Json(name = "genres")
+    val genres: List<Genre>? = emptyList(),
+
+    @ColumnInfo(name = "budget")
+    @Json(name = "budget")
+    val budget: Int? = 0,
+
     @ColumnInfo(name = "backdrop_path")
     @Json(name = "backdrop_path")
     val backdropPath: String? = "",

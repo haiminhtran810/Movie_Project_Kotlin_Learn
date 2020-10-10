@@ -1,21 +1,175 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
+        <variable
+            name="item"
+            type="learn.htm.projectlearn.model.Movie" />
+
+        <variable
+            name="viewModel"
+            type="learn.htm.projectlearn.ui.detail.MovieDetailViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.detail.MovieDetailFragment">
+        android:background="@color/black">
 
-        <androidx.appcompat.widget.AppCompatButton
-            android:id="@+id/buttonInsert"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Insert" />
+            android:background="@color/black"
+            tools:context=".ui.detail.MovieDetailFragment">
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/appCompatImageView"
+                imageUrl="@{viewModel.movie.getImageBackdropPathLink}"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_300"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_no_image" />
+
+            <View
+                android:id="@+id/viewTransparent"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_300"
+                android:alpha="0.7"
+                android:background="@color/dark_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageViewBack"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:padding="@dimen/dp_12"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_arrow_back" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/dp_240"
+                android:background="@drawable/bg_border_corner_top"
+                android:paddingStart="@dimen/dp_10"
+                android:paddingEnd="@dimen/dp_10"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewName"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/dp_150"
+                    android:layout_marginTop="@dimen/dp_25"
+                    android:singleLine="true"
+                    android:text="@{viewModel.movie.title}"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_24"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toStartOf="@id/imageViewMore"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Sophia" />
+
+                <androidx.appcompat.widget.AppCompatImageView
+                    android:id="@+id/imageViewMore"
+                    android:layout_width="@dimen/dp_48"
+                    android:layout_height="@dimen/dp_48"
+                    android:backgroundTint="@color/red"
+                    android:padding="@dimen/dp_12"
+                    app:layout_constraintBottom_toBottomOf="@id/textViewName"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="@id/textViewName"
+                    app:srcCompat="@drawable/ic_favorite" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewOverview"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_55"
+                    android:text="Overview"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_18"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewName" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewDescription"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:ellipsize="end"
+                    android:maxLines="5"
+                    android:text="@{viewModel.movie.overview}"
+                    android:textColor="@color/light_gray"
+                    android:textSize="@dimen/sp_12"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/textViewOverview"
+                    tools:text="In this post, we will look around the basic structure of a sample Disney project that built with Jetpack Compose and other Jetpack components like Hilt and Room database." />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewTrailer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="Trailer"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_18"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewDescription" />
+
+                <com.google.android.exoplayer2.ui.StyledPlayerView
+                    android:id="@+id/styledPlayerView"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dp_200"
+                    android:focusable="true"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewTrailer" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/textViewArtist"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_10"
+                    android:text="Artist"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/sp_18"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/styledPlayerView" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/imageAvatar"
+                imageUrl="@{viewModel.movie.imageLink}"
+                android:layout_width="@dimen/dp_130"
+                android:layout_height="@dimen/dp_163"
+                android:layout_marginStart="@dimen/dp_20"
+                android:layout_marginTop="@dimen/dp_180"
+                android:adjustViewBounds="true"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:src="@drawable/ic_no_image" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
