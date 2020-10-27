@@ -30,7 +30,11 @@ versions.glide = "4.11.0"
 versions.transformations = "4.0.1"
 versions.datastore = "1.0.0-alpha01"
 versions.exoplayer = "2.12.0"
+versions.cast = "19.0.0"
 ext.versions = versions
+
+
+deps.cast = "com.google.android.gms:play-services-cast-framework:$versions.cast"
 
 def kotlin = [:]
 kotlin.stdlib = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$versions.kotlin_version"
@@ -123,14 +127,14 @@ deps.glide = glide
 
 def datastore = [:]
 datastore.preferences = "androidx.datastore:datastore-preferences:$versions.datastore"
-datastore.proto  = "androidx.datastore:datastore-core:$versions.datastore"
+datastore.proto = "androidx.datastore:datastore-core:$versions.datastore"
 deps.datastore = datastore
 
 def exoplayer = [:]
 exoplayer.exoplayer = "com.google.android.exoplayer:exoplayer:$versions.exoplayer"
-exoplayer.core  = "com.google.android.exoplayer:exoplayer-core:$versions.exoplayer"
-exoplayer.dash  = "com.google.android.exoplayer:exoplayer-dash:$versions.exoplayer"
-exoplayer.ui  = "com.google.android.exoplayer:exoplayer-ui:$versions.exoplayer"
+exoplayer.core = "com.google.android.exoplayer:exoplayer-core:$versions.exoplayer"
+exoplayer.dash = "com.google.android.exoplayer:exoplayer-dash:$versions.exoplayer"
+exoplayer.ui = "com.google.android.exoplayer:exoplayer-ui:$versions.exoplayer"
 deps.exoplayer = exoplayer
 
 deps.timber = "com.jakewharton.timber:timber:$versions.timber"

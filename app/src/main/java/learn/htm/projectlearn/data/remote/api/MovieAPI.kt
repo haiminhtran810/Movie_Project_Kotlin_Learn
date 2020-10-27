@@ -10,10 +10,10 @@ import retrofit2.http.Query
 
 interface MovieAPI {
     @GET("movie/popular")
-    fun getMovieListPopular(@Query(ApiParams.PAGE) page: Int): Single<MovieResponse>
+    suspend fun getMovieListPopular(@Query(ApiParams.PAGE) page: Int): MovieResponse
 
     @GET("movie/{movie_id}")
-    fun getMovieDetail(@Path(ApiParams.MOVIE_ID) movieId: String): Single<Movie>
+    suspend fun getMovieDetailAsync(@Path(ApiParams.MOVIE_ID) movieId: String): Movie
 
     @GET("movie/{movie_id}/videos")
     fun getVideos(@Path(ApiParams.MOVIE_ID) movieId: String): Single<Videos>

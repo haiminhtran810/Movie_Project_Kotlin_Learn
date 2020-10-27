@@ -12,6 +12,7 @@ import learn.htm.projectlearn.extension.showDialogLoading
 import learn.htm.projectlearn.model.Movie
 import learn.htm.projectlearn.ui.home.HomeFragment
 import org.koin.androidx.viewmodel.ext.android.viewModel
+import timber.log.Timber
 
 class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>() {
 
@@ -47,7 +48,6 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
                     else -> null
                 }
                 errorState?.let {
-                    viewModel.onError(it.error)
                 }
             }
         }
@@ -57,13 +57,6 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
             swipeRefreshLayout.setOnRefreshListener {
                 movieAdapter?.refresh()
             }
-//            appBarLayout.addOnOffsetChangedListener(AppBarLayout.OnOffsetChangedListener { appBarLayout, verticalOffset ->
-//                if (isAdded) {
-//                    val alpha =
-//                        (appBarLayout.totalScrollRange - abs(verticalOffset)) / (appBarLayout.totalScrollRange * 1.0F)
-//
-//                }
-//        })
         }
         viewModel.getMovies()
     }
@@ -85,6 +78,7 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
         viewModel.apply {
             movie.observe(viewLifecycleOwner, Observer {
                 viewBinding.swipeRefreshLayout.isRefreshing = false
+                Timber.d("movie $it")
                 movieAdapter?.submitData(lifecycle, it)
             })
         }
