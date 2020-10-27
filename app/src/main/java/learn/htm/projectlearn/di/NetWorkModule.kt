@@ -6,7 +6,6 @@ import learn.htm.projectlearn.data.remote.api.CONNECTION_API_TIME_OUT
 import learn.htm.projectlearn.data.remote.api.MovieAPI
 import learn.htm.projectlearn.data.remote.api.READ_API_TIME_OUT
 import learn.htm.projectlearn.data.remote.api.WRITE_API_TIME_OUT
-import learn.htm.projectlearn.data.remote.factory.RxErrorHandlingFactory
 import learn.htm.projectlearn.data.remote.interceptor.HeaderInterceptor
 import learn.htm.projectlearn.data.remote.moshi.MoshiArrayListJsonAdapter
 import okhttp3.Interceptor
@@ -75,7 +74,6 @@ private fun provideDefaultRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Re
         .baseUrl(BuildConfig.API_URL)
         .client(okHttpClient)
         .addConverterFactory(MoshiConverterFactory.create(moshi))
-        .addCallAdapterFactory(RxErrorHandlingFactory())
         .build()
 
 private fun provideServerAPIService(retrofit: Retrofit): MovieAPI =

@@ -1,24 +1,24 @@
 package learn.htm.projectlearn.ui.popular
 
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 import learn.htm.projectlearn.base.BaseViewModel
 import learn.htm.projectlearn.data.remote.repository.MovieRepository
 import learn.htm.projectlearn.model.Movie
-import learn.htm.projectlearn.utils.RxUtils
-import learn.htm.projectlearn.utils.SingleLiveData
+import timber.log.Timber
 
-class PopularViewModel(private val movieRepository: MovieRepository) :
-    BaseViewModel() {
-    val movie = SingleLiveData<PagingData<Movie>>()
+class PopularViewModel(private val movieRepository: MovieRepository) : BaseViewModel() {
+    val movie = MutableLiveData<PagingData<Movie>>()
     fun getMovies() {
-        addDisposable(
-            movieRepository.getMovieListPopular().compose(RxUtils.applyFlowableScheduler())
-                .subscribe({
-                    movie.value = it
-                }, {
-                    //TODO: get error to adapter UI
-                    //onError(it)
-                })
-        )
+        Timber.d("getMovies")
+        viewModelScope.launch {
+            movieRepository.getMovieListPopular().cachedIn(this).collectLatest {
+                movie.value = it
+            }
+        }
     }
 }
