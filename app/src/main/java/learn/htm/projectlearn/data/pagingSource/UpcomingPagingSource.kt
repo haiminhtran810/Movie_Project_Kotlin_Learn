@@ -1,18 +1,16 @@
-package learn.htm.projectlearn.data
+package learn.htm.projectlearn.data.pagingSource
 
 import androidx.paging.PagingSource
+import learn.htm.projectlearn.data.Constants
 import learn.htm.projectlearn.data.remote.api.MovieAPI
 import learn.htm.projectlearn.model.Movie
-import timber.log.Timber
 
-class MoviePagingSource(private val movieAPI: MovieAPI) : PagingSource<Int, Movie>() {
+class UpcomingPagingSource(private val movieAPI: MovieAPI) : PagingSource<Int, Movie>() {
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Movie> {
-        Timber.d("MoviePagingSource: movieAPI")
         return try {
             val pageIndex = params.key ?: Constants.DEFAULT_FIRST_PAGE
-            val data = movieAPI.getMovieListPopular(pageIndex)
+            val data = movieAPI.getMovieListUpcoming(pageIndex)
             val resultantItems = data.results ?: emptyList<Movie>()
-            Timber.d("MoviePagingSource: $resultantItems")
             LoadResult.Page(
                 data = resultantItems,
                 prevKey = if (pageIndex == Constants.DEFAULT_FIRST_PAGE) {
@@ -20,14 +18,13 @@ class MoviePagingSource(private val movieAPI: MovieAPI) : PagingSource<Int, Movi
                 } else {
                     pageIndex - 1
                 },
-                nextKey = if (data.results?.isEmpty() == true) {
+                nextKey = if (data.totalPages == pageIndex) {
                     null
                 } else {
                     pageIndex + 1
                 }
             )
         } catch (e: Exception) {
-            Timber.d("MoviePagingSource: $e")
             LoadResult.Error(e)
         }
     }

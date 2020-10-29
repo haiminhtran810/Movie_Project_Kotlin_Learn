@@ -3,8 +3,8 @@ package learn.htm.projectlearn.ui.popular
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
-import androidx.lifecycle.Observer
 import androidx.paging.LoadState
+import androidx.recyclerview.widget.PagerSnapHelper
 import learn.htm.projectlearn.R
 import learn.htm.projectlearn.base.BaseFragment
 import learn.htm.projectlearn.databinding.FragmentPopularBinding
@@ -54,6 +54,7 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
 
         viewBinding.apply {
             recyclerMovie.adapter = movieAdapter
+            PagerSnapHelper().attachToRecyclerView(recyclerMovie)
             swipeRefreshLayout.setOnRefreshListener {
                 movieAdapter?.refresh()
             }
@@ -76,7 +77,7 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
     override fun observeEvent() {
         super.observeEvent()
         viewModel.apply {
-            movie.observe(viewLifecycleOwner, Observer {
+            movie.observe(viewLifecycleOwner, {
                 viewBinding.swipeRefreshLayout.isRefreshing = false
                 Timber.d("movie $it")
                 movieAdapter?.submitData(lifecycle, it)

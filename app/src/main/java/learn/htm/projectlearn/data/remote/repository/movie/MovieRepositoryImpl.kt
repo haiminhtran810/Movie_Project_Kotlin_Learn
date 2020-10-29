@@ -7,10 +7,11 @@ import io.reactivex.Completable
 import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
 import learn.htm.projectlearn.data.Constants
-import learn.htm.projectlearn.data.MoviePagingSource
 import learn.htm.projectlearn.data.local.dao.MovieDao
+import learn.htm.projectlearn.data.pagingSource.PopularPagingSource
 import learn.htm.projectlearn.data.remote.api.MovieAPI
 import learn.htm.projectlearn.data.remote.repository.MovieRepository
+import learn.htm.projectlearn.data.remote.response.MovieCreditsResponse
 import learn.htm.projectlearn.model.Movie
 import learn.htm.projectlearn.model.Videos
 import timber.log.Timber
@@ -23,7 +24,7 @@ class MovieRepositoryImpl(private val movieAPI: MovieAPI, private val movieDao: 
         return Pager(
             config = PagingConfig(pageSize = Constants.DEFAULT_ITEM_PER_PAGE),
             pagingSourceFactory = {
-                MoviePagingSource(movieAPI)
+                PopularPagingSource(movieAPI)
             }
         ).flow
     }
@@ -33,8 +34,12 @@ class MovieRepositoryImpl(private val movieAPI: MovieAPI, private val movieDao: 
     }
 
 
-    override fun getVideos(movieId: String): Single<Videos> {
+    override suspend fun getVideos(movieId: String): Videos {
         return movieAPI.getVideos(movieId)
+    }
+
+    override suspend fun getMovieCredits(movieId: String): MovieCreditsResponse {
+        return movieAPI.getMovieCredits(movieId)
     }
 
     override fun updateMovieLocal(movie: Movie): Completable {
