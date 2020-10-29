@@ -2,6 +2,7 @@
     <string name="app_name">ProjectLearn</string>
     <string name="favorite">Favorite</string>
     <string name="popular">Popular</string>
+    <string name="the_movies">THE MOVIES</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ok">Ok</string>
 
@@ -18,5 +19,7 @@
     <string name="network_cellular">Network Cellular </string>
     <string name="network_vpn">Network VPN </string>
     <string name="network_lost">No network</string>
+    <string name="overview">Overview</string>
+    <string name="top_billed_cast">Top Billed Cast</string>
 
 </resources>

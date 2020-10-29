@@ -4,6 +4,7 @@ import androidx.paging.PagingData
 import io.reactivex.Completable
 import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
+import learn.htm.projectlearn.data.remote.response.MovieCreditsResponse
 import learn.htm.projectlearn.model.Movie
 import learn.htm.projectlearn.model.Videos
 
@@ -11,7 +12,8 @@ interface MovieRepository {
 
     suspend fun getMovieListPopular(): Flow<PagingData<Movie>>
     suspend fun getMovieDetailAsync(movieId: String): Movie
-    fun getVideos(movieId: String): Single<Videos>
+    suspend fun getVideos(movieId: String): Videos
+    suspend fun getMovieCredits(movieId: String): MovieCreditsResponse
 
     // Database
     fun updateMovieLocal(movie: Movie): Completable

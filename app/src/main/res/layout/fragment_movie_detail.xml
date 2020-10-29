@@ -73,7 +73,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/dp_150"
                     android:layout_marginTop="@dimen/dp_25"
-                    android:singleLine="true"
+                    android:ellipsize="end"
+                    android:maxLines="2"
                     android:text="@{viewModel.movie.title}"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_24"
@@ -99,7 +100,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_55"
-                    android:text="Overview"
+                    android:text="@string/overview"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_18"
                     android:textStyle="bold"
@@ -131,6 +132,7 @@
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_18"
                     android:textStyle="bold"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViewDescription" />
@@ -140,6 +142,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/dp_200"
                     android:focusable="true"
+                    android:visibility="gone"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/textViewTrailer" />
@@ -149,13 +152,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dp_10"
-                    android:text="Artist"
+                    android:text="@string/top_billed_cast"
                     android:textColor="@color/white"
                     android:textSize="@dimen/sp_18"
                     android:textStyle="bold"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/styledPlayerView" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerCast"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dp_5"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/textViewArtist"
+                    tools:listitem="@layout/item_cast" />
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.appcompat.widget.AppCompatImageView
