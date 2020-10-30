@@ -2,7 +2,6 @@ package learn.htm.projectlearn.ui.favorite
 
 import android.os.Bundle
 import android.view.View
-import androidx.lifecycle.Observer
 import learn.htm.projectlearn.R
 import learn.htm.projectlearn.base.BaseFragment
 import learn.htm.projectlearn.databinding.FragmentFavoriteBinding
@@ -40,13 +39,13 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
     override fun observeEvent() {
         super.observeEvent()
         viewModel.apply {
-            movies.observe(viewLifecycleOwner, Observer {
+            movies.observe(viewLifecycleOwner, {
                 movieAdapter?.submitList(it)
             })
         }
 
         shareViewModel.apply {
-            refreshMovieFavorite.observe(viewLifecycleOwner, Observer {
+            refreshMovieFavorite.observe(viewLifecycleOwner, {
                 viewModel.getMoviesLocal()
             })
         }

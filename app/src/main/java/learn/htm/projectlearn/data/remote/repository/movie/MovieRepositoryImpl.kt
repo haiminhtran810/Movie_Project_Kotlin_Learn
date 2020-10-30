@@ -8,7 +8,9 @@ import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
 import learn.htm.projectlearn.data.Constants
 import learn.htm.projectlearn.data.local.dao.MovieDao
+import learn.htm.projectlearn.data.pagingSource.NowPlayingPagingSource
 import learn.htm.projectlearn.data.pagingSource.PopularPagingSource
+import learn.htm.projectlearn.data.pagingSource.UpcomingPagingSource
 import learn.htm.projectlearn.data.remote.api.MovieAPI
 import learn.htm.projectlearn.data.remote.repository.MovieRepository
 import learn.htm.projectlearn.data.remote.response.MovieCreditsResponse
@@ -36,6 +38,24 @@ class MovieRepositoryImpl(private val movieAPI: MovieAPI, private val movieDao: 
 
     override suspend fun getVideos(movieId: String): Videos {
         return movieAPI.getVideos(movieId)
+    }
+
+    override suspend fun getTopVideos(): Flow<PagingData<Movie>> {
+        return Pager(
+            config = PagingConfig(pageSize = Constants.DEFAULT_ITEM_PER_PAGE),
+            pagingSourceFactory = {
+                NowPlayingPagingSource(movieAPI)
+            }
+        ).flow
+    }
+
+    override suspend fun getUpcomingVideos(): Flow<PagingData<Movie>> {
+        return Pager(
+            config = PagingConfig(pageSize = Constants.DEFAULT_ITEM_PER_PAGE),
+            pagingSourceFactory = {
+                UpcomingPagingSource(movieAPI)
+            }
+        ).flow
     }
 
     override suspend fun getMovieCredits(movieId: String): MovieCreditsResponse {
