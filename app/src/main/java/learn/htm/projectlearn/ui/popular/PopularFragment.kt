@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.paging.LoadState
-import androidx.recyclerview.widget.PagerSnapHelper
+import androidx.recyclerview.widget.LinearSnapHelper
 import learn.htm.projectlearn.R
 import learn.htm.projectlearn.base.BaseFragment
 import learn.htm.projectlearn.databinding.FragmentPopularBinding
@@ -22,12 +22,44 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
         get() = R.layout.fragment_popular
 
     private var movieAdapter: MovieAdapter? = null
+    private var movieTopAdapter: MovieAdapter? = null
+    private var movieUpcomingAdapter: MovieAdapter? = null
 
     private var dialogLoading: AlertDialog? = null
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        initAdapter()
+        viewBinding.apply {
+            recyclerMovie.adapter = movieAdapter
+            recyclerTopMovie.adapter = movieTopAdapter
+            recyclerUpcoming.adapter = movieUpcomingAdapter
+
+            LinearSnapHelper().attachToRecyclerView(recyclerMovie)
+            LinearSnapHelper().attachToRecyclerView(recyclerTopMovie)
+            LinearSnapHelper().attachToRecyclerView(recyclerUpcoming)
+
+            swipeRefreshLayout.setOnRefreshListener {
+                movieAdapter?.refresh()
+                movieTopAdapter?.refresh()
+                movieUpcomingAdapter?.refresh()
+            }
+        }
+        viewModel.apply {
+            getMovies()
+            getTopMovies()
+            getUpcomingMovies()
+        }
+    }
+
+    private fun initAdapter() {
         movieAdapter = MovieAdapter {
+            navigationMovieDetail(it)
+        }
+        movieTopAdapter = MovieAdapter {
+            navigationMovieDetail(it)
+        }
+        movieUpcomingAdapter = MovieAdapter {
             navigationMovieDetail(it)
         }
 
@@ -51,15 +83,6 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
                 }
             }
         }
-
-        viewBinding.apply {
-            recyclerMovie.adapter = movieAdapter
-            PagerSnapHelper().attachToRecyclerView(recyclerMovie)
-            swipeRefreshLayout.setOnRefreshListener {
-                movieAdapter?.refresh()
-            }
-        }
-        viewModel.getMovies()
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -81,6 +104,16 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
                 viewBinding.swipeRefreshLayout.isRefreshing = false
                 Timber.d("movie $it")
                 movieAdapter?.submitData(lifecycle, it)
+            })
+            movieTop.observe(viewLifecycleOwner, {
+                viewBinding.swipeRefreshLayout.isRefreshing = false
+                Timber.d("movie $it")
+                movieTopAdapter?.submitData(lifecycle, it)
+            })
+            movieUpcoming.observe(viewLifecycleOwner, {
+                viewBinding.swipeRefreshLayout.isRefreshing = false
+                Timber.d("movie $it")
+                movieUpcomingAdapter?.submitData(lifecycle, it)
             })
         }
     }

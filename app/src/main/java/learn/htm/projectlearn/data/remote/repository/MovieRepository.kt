@@ -13,6 +13,8 @@ interface MovieRepository {
     suspend fun getMovieListPopular(): Flow<PagingData<Movie>>
     suspend fun getMovieDetailAsync(movieId: String): Movie
     suspend fun getVideos(movieId: String): Videos
+    suspend fun getTopVideos(): Flow<PagingData<Movie>>
+    suspend fun getUpcomingVideos(): Flow<PagingData<Movie>>
     suspend fun getMovieCredits(movieId: String): MovieCreditsResponse
 
     // Database

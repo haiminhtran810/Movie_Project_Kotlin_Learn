@@ -2,6 +2,8 @@
     <string name="app_name">ProjectLearn</string>
     <string name="favorite">Favorite</string>
     <string name="popular">Popular</string>
+    <string name="top">Top Now Playing</string>
+    <string name="upcoming">Upcoming</string>
     <string name="the_movies">THE MOVIES</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ok">Ok</string>
