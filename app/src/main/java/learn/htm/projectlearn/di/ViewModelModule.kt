@@ -5,6 +5,7 @@ import learn.htm.projectlearn.ui.ShareViewModel
 import learn.htm.projectlearn.ui.detail.MovieDetailViewModel
 import learn.htm.projectlearn.ui.favorite.FavoriteViewModel
 import learn.htm.projectlearn.ui.home.HomeViewModel
+import learn.htm.projectlearn.ui.nowPlaying.NowPlayingFragmentViewModel
 import learn.htm.projectlearn.ui.player.PlayerViewModel
 import learn.htm.projectlearn.ui.popular.PopularViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
@@ -18,4 +19,5 @@ val viewModelModule = module {
     viewModel { MovieDetailViewModel(get()) }
     viewModel { ShareViewModel() }
     viewModel { PlayerViewModel() }
+    viewModel { NowPlayingFragmentViewModel() }
 }

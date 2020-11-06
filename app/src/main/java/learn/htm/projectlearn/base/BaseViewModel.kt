@@ -5,7 +5,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.plus
 import learn.htm.projectlearn.data.Constants
 import learn.htm.projectlearn.data.remote.factory.RxCallAdapterWrapper
 import learn.htm.projectlearn.utils.SingleLiveData
@@ -36,7 +35,6 @@ abstract class BaseViewModel : ViewModel() {
             onError(throwable)
         }
     }
-    protected val viewModelScopeExceptionHandler = viewModelScope + exceptionHandler
 
     open suspend fun onError(throwable: Throwable) {
         val rxMapperNullErrorMessage = "The mapper function returned a null value."

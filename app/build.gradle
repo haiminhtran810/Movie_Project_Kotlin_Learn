@@ -163,6 +163,7 @@ dependencies {
     implementation deps.exoplayer.core
     implementation deps.exoplayer.dash
     implementation deps.exoplayer.ui
+    implementation deps.exoplayer.mediasession
 
     // Cast
     implementation deps.cast

@@ -10,7 +10,6 @@ import learn.htm.projectlearn.model.Crew
 import learn.htm.projectlearn.model.Movie
 import learn.htm.projectlearn.model.Videos
 import learn.htm.projectlearn.utils.SingleLiveData
-import timber.log.Timber
 
 class MovieDetailViewModel(private val movieRepository: MovieRepository) :
     BaseViewModel() {
@@ -48,22 +47,21 @@ class MovieDetailViewModel(private val movieRepository: MovieRepository) :
                     crew.value = it.crew
                 }
             } catch (e: Exception) {
-                Timber.d(e.message)
                 onError(e)
             }
         }
     }
 
-    fun insertMovie() {
-        /*movie.value?.let {
-            addDisposable(
-                movieRepository.insertMovieLocal(it).compose(RxUtils.applyCompletableScheduler())
-                    .subscribe({
-                        insertSuccess.call()
-                    }, { error ->
-                        onError(error)
-                    })
-            )
-        }*/
-    }
+//    fun insertMovie() {
+//        movie.value?.let {
+//            addDisposable(
+//                movieRepository.insertMovieLocal(it).compose(RxUtils.applyCompletableScheduler())
+//                    .subscribe({
+//                        insertSuccess.call()
+//                    }, { error ->
+//                        onError(error)
+//                    })
+//            )
+//        }
+//    }
 }
