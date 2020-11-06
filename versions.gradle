@@ -135,6 +135,7 @@ exoplayer.exoplayer = "com.google.android.exoplayer:exoplayer:$versions.exoplaye
 exoplayer.core = "com.google.android.exoplayer:exoplayer-core:$versions.exoplayer"
 exoplayer.dash = "com.google.android.exoplayer:exoplayer-dash:$versions.exoplayer"
 exoplayer.ui = "com.google.android.exoplayer:exoplayer-ui:$versions.exoplayer"
+exoplayer.mediasession = "com.google.android.exoplayer:extension-mediasession:$versions.exoplayer"
 deps.exoplayer = exoplayer
 
 deps.timber = "com.jakewharton.timber:timber:$versions.timber"

@@ -25,9 +25,13 @@
         <activity android:name=".ui.player.PlayerActivity"></activity>
 
         <service
-            android:name=".service.MusicPlayService"
-            android:exported="false"
-            android:foregroundServiceType="location|camera|microphone" />
+            android:name=".base.BaseService"
+            android:enabled="true"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.media.browse.MediaBrowserService" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>

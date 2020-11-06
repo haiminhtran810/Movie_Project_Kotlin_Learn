@@ -1,16 +1,21 @@
 package learn.htm.projectlearn.di
 
+import android.content.ComponentName
+import android.content.Context
 import com.squareup.moshi.Moshi
 import learn.htm.projectlearn.BuildConfig
+import learn.htm.projectlearn.base.BaseService
 import learn.htm.projectlearn.data.remote.api.CONNECTION_API_TIME_OUT
 import learn.htm.projectlearn.data.remote.api.MovieAPI
 import learn.htm.projectlearn.data.remote.api.READ_API_TIME_OUT
 import learn.htm.projectlearn.data.remote.api.WRITE_API_TIME_OUT
 import learn.htm.projectlearn.data.remote.interceptor.HeaderInterceptor
 import learn.htm.projectlearn.data.remote.moshi.MoshiArrayListJsonAdapter
+import learn.htm.projectlearn.service.MusicServiceConnection
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
+import org.koin.android.ext.koin.androidApplication
 import org.koin.core.qualifier.named
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -43,6 +48,8 @@ val netWorkModule = module {
     }
 
     single { provideServerAPIService(get(qualifier = named(DEFAULT_SERVICE))) }
+
+    single { provideMusicServiceConnection(androidApplication()) }
 }
 
 fun provideLogInterceptor(): HttpLoggingInterceptor = HttpLoggingInterceptor().apply {
@@ -78,4 +85,11 @@ private fun provideDefaultRetrofit(okHttpClient: OkHttpClient, moshi: Moshi): Re
 
 private fun provideServerAPIService(retrofit: Retrofit): MovieAPI =
     retrofit.create(MovieAPI::class.java)
+
+private fun provideMusicServiceConnection(context: Context): MusicServiceConnection {
+    return MusicServiceConnection.getInstance(
+        context,
+        ComponentName(context, BaseService::class.java)
+    )
+}
 
