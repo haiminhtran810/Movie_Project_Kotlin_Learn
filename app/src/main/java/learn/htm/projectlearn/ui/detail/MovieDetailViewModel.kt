@@ -23,6 +23,7 @@ class MovieDetailViewModel(private val movieRepository: MovieRepository) :
         viewModelScope.launch(Dispatchers.Main) {
             try {
                 movie.value = movieRepository.getMovieDetailAsync(idMovie)
+                val a = ""
             } catch (e: Exception) {
                 onError(e)
             }

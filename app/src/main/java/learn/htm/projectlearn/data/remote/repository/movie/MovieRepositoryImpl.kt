@@ -3,8 +3,6 @@ package learn.htm.projectlearn.data.remote.repository.movie
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import io.reactivex.Completable
-import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
 import learn.htm.projectlearn.data.Constants
 import learn.htm.projectlearn.data.local.dao.MovieDao
@@ -62,19 +60,17 @@ class MovieRepositoryImpl(private val movieAPI: MovieAPI, private val movieDao: 
         return movieAPI.getMovieCredits(movieId)
     }
 
-    override fun updateMovieLocal(movie: Movie): Completable {
-        return Completable.create {
-            movieDao.updateMovies(movie)
-        }
+    override suspend fun updateMovieLocal(movie: Movie): Boolean {
+        movieDao.updateMovies(movie)
+        return true
     }
 
-    override fun insertMovieLocal(movie: Movie): Completable {
-        return Completable.create {
-            movieDao.insertMovie(movie)
-        }
+    override suspend fun insertMovieLocal(movie: Movie): Boolean {
+        movieDao.insertMovie(movie)
+        return true
     }
 
-    override fun getMoviesLocal(): Single<List<Movie>> {
+    override suspend fun getMoviesLocal(): List<Movie> {
         return movieDao.getAllMovies()
     }
 }

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">ProjectLearn</string>
+    <string name="app_name">Movie DB</string>
     <string name="favorite">Favorite</string>
     <string name="popular">Popular</string>
     <string name="top">Top Now Playing</string>
@@ -22,6 +22,7 @@
     <string name="network_vpn">Network VPN </string>
     <string name="network_lost">No network</string>
     <string name="overview">Overview</string>
-    <string name="top_billed_cast">Top Billed Cast</string>
+    <string name="top_billed_cast">Actors</string>
+    <string name="trailer">Trailer</string>
 
 </resources>

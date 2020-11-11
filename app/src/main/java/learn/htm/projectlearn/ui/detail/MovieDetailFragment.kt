@@ -2,7 +2,6 @@ package learn.htm.projectlearn.ui.detail
 
 import android.os.Bundle
 import android.view.View
-import com.google.android.exoplayer2.MediaItem
 import com.google.android.exoplayer2.PlaybackPreparer
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.ui.StyledPlayerControlView
@@ -17,8 +16,10 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
+
 /*
 * UI: https://hayko.tv/zelpro.id/CCV_uptp9ON
+* https://dribbble.com/shots/7879826-Movie-and-TV-shows-App
 * */
 
 class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding, MovieDetailViewModel>(),
@@ -61,20 +62,20 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding, MovieDetail
         }
     }
 
-    private fun initExoPlayer(url: String) {
-        Timber.d("Youtube url: $url")
-        //Creating the player
-        player = SimpleExoPlayer.Builder(requireContext()).build()
-        viewBinding.apply {
-            styledPlayerView.setControllerVisibilityListener(this@MovieDetailFragment)
-            styledPlayerView.player = player
-            val mediaItem =
-                MediaItem.fromUri(url)
-            player?.setMediaItem(mediaItem)
-            player?.prepare()
-            player?.play()
-        }
-    }
+//    private fun initExoPlayer(url: String) {
+//        Timber.d("Youtube url: $url")
+//        //Creating the player
+//        player = SimpleExoPlayer.Builder(requireContext()).build()
+//        viewBinding.apply {
+//            styledPlayerView.setControllerVisibilityListener(this@MovieDetailFragment)
+//            styledPlayerView.player = player
+//            val mediaItem =
+//                MediaItem.fromUri(url)
+//            player?.setMediaItem(mediaItem)
+//            player?.prepare()
+//            player?.play()
+//        }
+//    }
 
     private fun releasePlayer() {
         player?.apply {

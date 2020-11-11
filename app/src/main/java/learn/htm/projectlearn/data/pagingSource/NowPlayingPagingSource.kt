@@ -10,7 +10,7 @@ class NowPlayingPagingSource(private val movieAPI: MovieAPI) : PagingSource<Int,
         return try {
             val pageIndex = params.key ?: Constants.DEFAULT_FIRST_PAGE
             val data = movieAPI.getMovieListNowPlaying(pageIndex)
-            val resultantItems = data.results ?: emptyList<Movie>()
+            val resultantItems = data.results ?: emptyList()
             LoadResult.Page(
                 data = resultantItems,
                 prevKey = if (pageIndex == Constants.DEFAULT_FIRST_PAGE) {
