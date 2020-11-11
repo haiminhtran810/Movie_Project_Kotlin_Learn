@@ -1,8 +1,6 @@
 package learn.htm.projectlearn.data.remote.repository
 
 import androidx.paging.PagingData
-import io.reactivex.Completable
-import io.reactivex.Single
 import kotlinx.coroutines.flow.Flow
 import learn.htm.projectlearn.data.remote.response.MovieCreditsResponse
 import learn.htm.projectlearn.model.Movie
@@ -18,7 +16,7 @@ interface MovieRepository {
     suspend fun getMovieCredits(movieId: String): MovieCreditsResponse
 
     // Database
-    fun updateMovieLocal(movie: Movie): Completable
-    fun insertMovieLocal(movie: Movie): Completable
-    fun getMoviesLocal(): Single<List<Movie>>
+    suspend fun updateMovieLocal(movie: Movie): Boolean
+    suspend fun insertMovieLocal(movie: Movie): Boolean
+    suspend fun getMoviesLocal(): List<Movie>
 }
