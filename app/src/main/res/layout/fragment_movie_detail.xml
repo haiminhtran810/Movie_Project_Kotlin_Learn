@@ -214,6 +214,7 @@
                 tools:listitem="@layout/item_cast" />
 
             <!--android:visibility="@{viewModel.isFavorite() ? View.GONE : View.VISIBLE}"-->
+            <!--android:onClick="@{() -> viewModel.insertMovie(viewModel.movie)}" : example hand model to viewmodel-->
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageFavorite"
                 imageUrlFalse="@{@drawable/ic_favorite_border_white}"
@@ -222,8 +223,8 @@
                 android:layout_width="@dimen/dp_48"
                 android:layout_height="@dimen/dp_48"
                 android:layout_marginEnd="@dimen/dp_15"
+                android:onClick="@{() -> viewModel.insertMovie(viewModel.movie)}"
                 android:padding="@dimen/dp_12"
-                android:visibility="@{viewModel.isFavorite() ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/imageViewBack"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/imageViewBack"

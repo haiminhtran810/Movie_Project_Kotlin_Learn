@@ -54,11 +54,11 @@ class MovieDetailViewModel(private val movieRepository: MovieRepository) :
         }
     }
 
-    fun insertMovie() {
-        movie.value?.let {
+    fun insertMovie(movieData: Movie?) {
+        if (movieData != null) {
             viewModelScope.launch(Dispatchers.Main) {
                 try {
-                    isFavorite.value = movieRepository.insertMovieLocal(it)
+                    isFavorite.value = movieRepository.insertMovieLocal(movieData)
                 } catch (e: Exception) {
                     onError(e)
                 }

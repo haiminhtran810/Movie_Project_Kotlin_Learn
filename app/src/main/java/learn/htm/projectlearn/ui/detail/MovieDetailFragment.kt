@@ -57,9 +57,6 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding, MovieDetail
             imageViewBack.setOnSingleClickListener {
                 requireActivity().onBackPressed()
             }
-            imageFavorite.setOnSingleClickListener {
-                viewModel?.insertMovie()
-            }
             recyclerCast.adapter = castAdapter
         }
     }
