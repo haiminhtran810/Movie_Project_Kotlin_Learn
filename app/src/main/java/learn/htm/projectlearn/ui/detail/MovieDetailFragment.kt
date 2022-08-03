@@ -16,7 +16,6 @@ import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import timber.log.Timber
 
-
 /*
 * UI: https://hayko.tv/zelpro.id/CCV_uptp9ON
 * https://dribbble.com/shots/7879826-Movie-and-TV-shows-App
@@ -58,6 +57,9 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding, MovieDetail
             imageViewBack.setOnSingleClickListener {
                 requireActivity().onBackPressed()
             }
+            imageFavorite.setOnSingleClickListener {
+                viewModel?.insertMovie()
+            }
             recyclerCast.adapter = castAdapter
         }
     }
@@ -92,31 +94,31 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding, MovieDetail
     override fun observeEvent() {
         super.observeEvent()
         viewModel.apply {
-            insertSuccess.observe(viewLifecycleOwner, {
+            insertSuccess.observe(viewLifecycleOwner) {
                 shareViewModel.refreshMovieFavorite.call()
                 requireActivity().onBackPressed()
-            })
-            movieVideos.observe(viewLifecycleOwner, {
+            }
+            movieVideos.observe(viewLifecycleOwner) {
                 /* val url =
                      "http://www.youtube.com/get_video_info?&video_id=${it.results[0].key}&el=info&ps=default&eurl=&gl=US&hl=en"
                  initExoPlayer(url)*/
-            })
-            cast.observe(viewLifecycleOwner, {
+            }
+            cast.observe(viewLifecycleOwner) {
                 Timber.d("Cast: ${it.size}")
                 castAdapter?.submitList(it)
-            })
-            crew.observe(viewLifecycleOwner, {
+            }
+            crew.observe(viewLifecycleOwner) {
                 Timber.d("Crew: ${it.size}")
-            })
+            }
         }
     }
 
     override fun preparePlayback() {
-
+        // Handle then
     }
 
     override fun onVisibilityChange(visibility: Int) {
-
+        // Handle then
     }
 
 }

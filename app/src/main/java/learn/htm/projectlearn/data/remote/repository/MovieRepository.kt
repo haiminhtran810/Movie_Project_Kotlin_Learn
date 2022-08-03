@@ -7,7 +7,6 @@ import learn.htm.projectlearn.model.Movie
 import learn.htm.projectlearn.model.Videos
 
 interface MovieRepository {
-
     suspend fun getMovieListPopular(): Flow<PagingData<Movie>>
     suspend fun getMovieDetailAsync(movieId: String): Movie
     suspend fun getVideos(movieId: String): Videos
@@ -18,5 +17,6 @@ interface MovieRepository {
     // Database
     suspend fun updateMovieLocal(movie: Movie): Boolean
     suspend fun insertMovieLocal(movie: Movie): Boolean
+    suspend fun deleteMovieLocal(movie: Movie): Boolean
     suspend fun getMoviesLocal(): List<Movie>
 }

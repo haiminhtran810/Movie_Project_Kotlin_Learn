@@ -12,6 +12,8 @@
         <variable
             name="viewModel"
             type="learn.htm.projectlearn.ui.detail.MovieDetailViewModel" />
+
+        <import type="android.view.View" />
     </data>
 
     <androidx.core.widget.NestedScrollView
@@ -91,7 +93,7 @@
                     android:id="@+id/styledPlayerView"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="visible"></com.google.android.exoplayer2.ui.StyledPlayerView>
+                    android:visibility="visible" />
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
@@ -211,16 +213,22 @@
                 app:layout_constraintTop_toBottomOf="@id/textViewArtist"
                 tools:listitem="@layout/item_cast" />
 
+            <!--android:visibility="@{viewModel.isFavorite() ? View.GONE : View.VISIBLE}"-->
             <androidx.appcompat.widget.AppCompatImageView
                 android:id="@+id/imageFavorite"
+                imageUrlFalse="@{@drawable/ic_favorite_border_white}"
+                imageUrlTrue="@{@drawable/ic_favorite}"
+                isValue="@{viewModel.isFavorite()}"
                 android:layout_width="@dimen/dp_48"
                 android:layout_height="@dimen/dp_48"
                 android:layout_marginEnd="@dimen/dp_15"
                 android:padding="@dimen/dp_12"
+                android:visibility="@{viewModel.isFavorite() ? View.GONE : View.VISIBLE}"
                 app:layout_constraintBottom_toBottomOf="@id/imageViewBack"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@id/imageViewBack"
-                app:srcCompat="@drawable/ic__favorite_border_white" />
+                app:srcCompat="@drawable/ic_favorite"
+                tools:src="@drawable/ic_favorite_border_white" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

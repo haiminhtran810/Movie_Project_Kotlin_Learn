@@ -24,6 +24,21 @@ fun ImageView.bindImage(url: String?, listener: RequestListener<Drawable?>?) {
         .into(this)
 }
 
+@BindingAdapter(value = ["isValue", "imageUrlTrue", "imageUrlFalse"], requireAll = true)
+fun ImageView.bindImageLocal(
+    isValue: Boolean = false,
+    imageUrlTrue: Drawable?,
+    imageUrlFalse: Drawable?
+) {
+    this.setImageDrawable(
+        if (isValue) {
+            imageUrlTrue
+        } else {
+            imageUrlFalse
+        }
+    )
+}
+
 @BindingAdapter(value = ["list", "childLayout"], requireAll = false)
 fun ChipGroup.setChipList(list: List<String>?, childLayoutId: Int?) {
     list?.forEach { item ->

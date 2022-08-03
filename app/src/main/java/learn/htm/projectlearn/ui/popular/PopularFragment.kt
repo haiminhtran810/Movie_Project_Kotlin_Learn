@@ -100,21 +100,21 @@ class PopularFragment : BaseFragment<FragmentPopularBinding, PopularViewModel>()
     override fun observeEvent() {
         super.observeEvent()
         viewModel.apply {
-            movie.observe(viewLifecycleOwner, {
+            movie.observe(viewLifecycleOwner) {
                 viewBinding.swipeRefreshLayout.isRefreshing = false
                 Timber.d("movie $it")
                 movieAdapter?.submitData(lifecycle, it)
-            })
-            movieTop.observe(viewLifecycleOwner, {
+            }
+            movieTop.observe(viewLifecycleOwner) {
                 viewBinding.swipeRefreshLayout.isRefreshing = false
                 Timber.d("movie $it")
                 movieTopAdapter?.submitData(lifecycle, it)
-            })
-            movieUpcoming.observe(viewLifecycleOwner, {
+            }
+            movieUpcoming.observe(viewLifecycleOwner) {
                 viewBinding.swipeRefreshLayout.isRefreshing = false
                 Timber.d("movie $it")
                 movieUpcomingAdapter?.submitData(lifecycle, it)
-            })
+            }
         }
     }
 
