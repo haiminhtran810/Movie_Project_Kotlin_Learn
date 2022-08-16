@@ -24,5 +24,6 @@
     <string name="overview">Overview</string>
     <string name="top_billed_cast">Actors</string>
     <string name="trailer">Trailer</string>
+    <string name="detail_movie">Detail Movie</string>
 
 </resources>
