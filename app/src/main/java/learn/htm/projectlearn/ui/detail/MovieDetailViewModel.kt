@@ -1,5 +1,6 @@
 package learn.htm.projectlearn.ui.detail
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -18,12 +19,12 @@ class MovieDetailViewModel(private val movieRepository: MovieRepository) :
     val movieVideos = SingleLiveData<Videos>()
     val cast = SingleLiveData<List<Cast>>()
     val crew = SingleLiveData<List<Crew>>()
+    val isFavorite = MutableLiveData<Boolean>().apply { value = false }
 
     fun getMovieDetail(idMovie: String) {
         viewModelScope.launch(Dispatchers.Main) {
             try {
                 movie.value = movieRepository.getMovieDetailAsync(idMovie)
-                val a = ""
             } catch (e: Exception) {
                 onError(e)
             }
@@ -53,16 +54,27 @@ class MovieDetailViewModel(private val movieRepository: MovieRepository) :
         }
     }
 
-//    fun insertMovie() {
-//        movie.value?.let {
-//            addDisposable(
-//                movieRepository.insertMovieLocal(it).compose(RxUtils.applyCompletableScheduler())
-//                    .subscribe({
-//                        insertSuccess.call()
-//                    }, { error ->
-//                        onError(error)
-//                    })
-//            )
-//        }
-//    }
+    fun insertMovie(movieData: Movie?) {
+        if (movieData != null) {
+            viewModelScope.launch(Dispatchers.Main) {
+                try {
+                    isFavorite.value = movieRepository.insertMovieLocal(movieData)
+                } catch (e: Exception) {
+                    onError(e)
+                }
+            }
+        }
+    }
+
+    fun deleteMovie() {
+        movie.value?.let {
+            viewModelScope.launch(Dispatchers.Main) {
+                try {
+                    isFavorite.value = movieRepository.deleteMovieLocal(it).not()
+                } catch (e: Exception) {
+                    onError(e)
+                }
+            }
+        }
+    }
 }

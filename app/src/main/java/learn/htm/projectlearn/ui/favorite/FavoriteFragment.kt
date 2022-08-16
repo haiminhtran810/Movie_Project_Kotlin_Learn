@@ -39,15 +39,15 @@ class FavoriteFragment : BaseFragment<FragmentFavoriteBinding, FavoriteViewModel
     override fun observeEvent() {
         super.observeEvent()
         viewModel.apply {
-            movies.observe(viewLifecycleOwner, {
+            movies.observe(viewLifecycleOwner) {
                 movieAdapter?.submitList(it)
-            })
+            }
         }
 
         shareViewModel.apply {
-            refreshMovieFavorite.observe(viewLifecycleOwner, {
+            refreshMovieFavorite.observe(viewLifecycleOwner) {
                 viewModel.getMoviesLocal()
-            })
+            }
         }
     }
 

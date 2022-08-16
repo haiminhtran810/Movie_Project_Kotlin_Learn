@@ -70,6 +70,11 @@ class MovieRepositoryImpl(private val movieAPI: MovieAPI, private val movieDao: 
         return true
     }
 
+    override suspend fun deleteMovieLocal(movie: Movie): Boolean {
+        movieDao.deleteMovies(movie)
+        return true
+    }
+
     override suspend fun getMoviesLocal(): List<Movie> {
         return movieDao.getAllMovies()
     }
