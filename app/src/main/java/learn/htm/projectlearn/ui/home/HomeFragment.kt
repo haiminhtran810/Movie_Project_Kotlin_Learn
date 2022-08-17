@@ -36,22 +36,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
                 TabLayoutMediator(tabLayout, this) { tab, position ->
                     setCurrentItem(position, true)
                     when (position) {
-                        POPULAR_POSITION -> {
+                        MOVIE_POSITION -> {
                             tab.apply {
-                                text = getString(R.string.popular)
                                 icon = ContextCompat.getDrawable(
                                     requireContext(),
-                                    R.drawable.ic_star
+                                    R.drawable.ic_movie
                                 )
                             }
 
                         }
                         FAVORITE_POSITION -> {
                             tab.apply {
-                                text = getString(R.string.favorite)
                                 icon = ContextCompat.getDrawable(
                                     requireContext(),
-                                    R.drawable.ic_star
+                                    R.drawable.ic_favorite_white
                                 )
                             }
                         }
@@ -72,7 +70,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding, HomeViewModel>() {
     }
 
     companion object {
-        const val POPULAR_POSITION = 0
+        const val MOVIE_POSITION = 0
         const val FAVORITE_POSITION = 1
     }
 

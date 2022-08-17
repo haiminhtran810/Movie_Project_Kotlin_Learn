@@ -1,0 +1,131 @@
+name: Make stg build
+on:
+  workflow_dispatch:
+    inputs:
+      buildType:
+        description: 'release | debug'
+        required: true
+        default: 'release'
+      outputFormat:
+        description: 'Output format? (apk | aab)'
+        required: true
+        default: 'apk'
+      uploadToDrive:
+        description: 'Upload to Drive? (yes | no)'
+        required: true
+        default: 'yes'
+      uploadToFirebase:
+        description: 'Upload to Firebase? (yes | no). If yes and the outputFormat is aab then make sure the Firebase project is linked to a Google Play account'
+        required: true
+        default: 'yes'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validating buildType
+        if: github.event.inputs.buildType != 'release' && github.event.inputs.buildType != 'debug'
+        run: |
+          echo "buildType can only be release or debug"
+          exit 1
+      - name: Validating uploadToDrive
+        if: github.event.inputs.uploadToDrive != 'yes' && github.event.inputs.uploadToDrive != 'no'
+        run: |
+          echo "uploadToDrive flag can only be yes or no"
+          exit 1
+      - name: Validating uploadToFirebase
+        if: github.event.inputs.uploadToFirebase != 'yes' && github.event.inputs.uploadToFirebase != 'no'
+        run: |
+          echo "uploadToFirebase flag can only be yes or no"
+          exit 1
+      - name: Validating uploadToDrive and uploadToFirebase
+        if: github.event.inputs.uploadToDrive == 'no' && github.event.inputs.uploadToFirebase == 'no'
+        run: |
+          echo "uploadToDrive and uploadToFirebase can not be no together"
+          exit 1
+      - name: Validating outputFormat
+        if: github.event.inputs.outputFormat != 'apk' && github.event.inputs.outputFormat != 'aab'
+        run: |
+          echo "outputFormat can only be apk or aab"
+          exit 1
+      - name: Checkout the code
+        uses: actions/checkout@v2
+      - name: Grant gradlew permissions
+        run: chmod +x ./gradlew
+      - name: Decode the keystore
+        env:
+          ENCODED_STRING: ${{ secrets.ENCODED_KEYSTORE }}
+        run: |
+          TMP_KEYSTORE_FILE_PATH="${RUNNER_TEMP}"/keystore
+          mkdir "${TMP_KEYSTORE_FILE_PATH}"
+          echo $ENCODED_STRING | base64 -di > "${TMP_KEYSTORE_FILE_PATH}"/ks.jks
+      - name: Read release notes
+        id: readReleaseNotes
+        run: |
+          content="$(cat RELEASE.md)"
+          content="${content//'%'/'%25'}"
+          content="${content//$'\n'/'%0A'}"
+          content="${content//$'\r'/'%0D'}"
+          echo "::set-output name=release_notes::$content"
+      - name: Build APK
+        id: buildapk
+        run: |
+          buildPrefix="assemble"
+          outFormat=${{ github.event.inputs.outputFormat }}
+          if [ $outFormat == 'aab' ]; then buildPrefix="bundle"; fi
+          buildCmd="${buildPrefix}Stg${{ github.event.inputs.buildType }}"
+          ./gradlew "$buildCmd"
+          ext="*.${outFormat}"
+          apk_path=$(find $PWD/app/build/outputs/ -type f -name $ext)
+          apk_size_byte=$(stat -c %s $apk_path)
+          apk_size_mb=$(echo "${apk_size_byte}" | awk '{ $1/=1048576; printf "%.2f", $1 }')
+          apk_size="$apk_size_mb MB"
+          echo "::set-output name=apk_path::$apk_path"
+          echo "::set-output name=apk_size::$apk_size"
+        env:
+          SIGNING_KEY_ALIAS: ${{ secrets.SIGNING_KEY_ALIAS }}
+          SIGNING_KEY_PASSWORD: ${{ secrets.SIGNING_KEY_PASSWORD }}
+          SIGNING_STORE_PASSWORD: ${{ secrets.SIGNING_STORE_PASSWORD }}
+      - name: Upload build to Drive
+        id: uploadToDrive
+        if: github.event.inputs.uploadToDrive == 'yes'
+        uses: codetheweb/upload-to-drive@master
+        with:
+          target: "${{ steps.buildapk.outputs.apk_path }}"
+          credentials: ${{ secrets.GG_CLOUD_CREDENTIALS }}
+          folder: ${{ secrets.GG_DRIVE_FOLDER_ID }}
+      - name: Upload build to Firebase
+        if: github.event.inputs.uploadToFirebase == 'yes'
+        uses: wzieba/Firebase-Distribution-Github-Action@v1
+        with:
+          appId: ${{ secrets.FIREBASE_APP_ID_STG }}
+          token: ${{ secrets.FIREBASE_TOKEN }}
+          groups: ${{ secrets.FIREBASE_TESTER_GROUPS_STG }}
+          releaseNotesFile: RELEASE.md
+          file: "${{ steps.buildapk.outputs.apk_path }}"
+      - name: Prepare result message
+        id: resultMessage
+        run: |
+          verName=$(grep -o "versionName\s\+.*" buildSrc/src/main/java/Dependencies.kt | awk '{ print $3 }' | tr -d \''"\')
+          verCode=$(grep -o "versionCode\s\+.*" buildSrc/src/main/java/Dependencies.kt | awk '{ print $3 }' | tr -d \''"\')
+          uploadToDrive=${{ github.event.inputs.uploadToDrive }}
+          uploadToDriveResult="No"
+          if [ $uploadToDrive == 'yes' ]; then uploadToDriveResult=${{ steps.uploadToDrive.outputs.fileLink }}; fi
+          uploadToFirebase=${{ github.event.inputs.uploadToFirebase }}
+          uploadToFirebaseResult="No"
+          if [ $uploadToFirebase == 'yes' ]; then uploadToFirebaseResult="https://appdistribution.firebase.google.com/testerapps/${{secrets.FIREBASE_APP_ID_STG}}"; fi
+          echo "::set-output name=uploadToDriveResult::$uploadToDriveResult"
+          echo "::set-output name=uploadToFirebaseResult::$uploadToFirebaseResult"
+          echo "::set-output name=verName::$verName"
+          echo "::set-output name=verCode::$verCode"
+      - name: Notify build on Slack channel
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
+          SLACK_USERNAME: ${{ secrets.SLACK_USERNAME }}
+          SLACK_ICON: ${{ secrets.SLACK_ICON }}
+          SLACK_TITLE: "${{ secrets.APP_NAME }} build is available now!"
+          MSG_MINIMAL: true
+          SLACK_LINK_NAMES: true
+          SLACK_MESSAGE: ":white_small_square: Version: `${{ steps.resultMessage.outputs.verName }} - ${{ steps.resultMessage.outputs.verCode }}`\n:white_small_square: Environment: `stg`\n:white_small_square: Build type: `${{ github.event.inputs.buildType }}`\n:white_small_square: Output: `${{ github.event.inputs.outputFormat }}` `${{ steps.buildapk.outputs.apk_size }}`\n:white_small_square: Branch: `${{ github.ref_name }}`\n\nRelease notes:\n${{ steps.readReleaseNotes.outputs.release_notes }}\n\nGoogle Drive: ${{ steps.resultMessage.outputs.uploadToDriveResult }}\nFirebase: ${{ steps.resultMessage.outputs.uploadToFirebaseResult }}\n\ncc\n${{ secrets.SLACK_QAS }}"
+          SLACK_FOOTER: "Thanks,\nAndroid team"
