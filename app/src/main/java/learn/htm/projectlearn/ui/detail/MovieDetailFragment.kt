@@ -2,9 +2,6 @@ package learn.htm.projectlearn.ui.detail
 
 import android.os.Bundle
 import android.view.View
-import com.google.android.exoplayer2.PlaybackPreparer
-import com.google.android.exoplayer2.SimpleExoPlayer
-import com.google.android.exoplayer2.ui.StyledPlayerControlView
 import learn.htm.projectlearn.R
 import learn.htm.projectlearn.base.BaseFragment
 import learn.htm.projectlearn.binding.setOnSingleClickListener
@@ -21,11 +18,9 @@ import timber.log.Timber
 * https://dribbble.com/shots/7879826-Movie-and-TV-shows-App
 * */
 
-class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding, MovieDetailViewModel>(),
-    PlaybackPreparer, StyledPlayerControlView.VisibilityListener {
+class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding, MovieDetailViewModel>(){
 
     private var idMovie = ""
-    private var player: SimpleExoPlayer? = null
     private var movie: Movie? = null
     private var castAdapter: CastAdapter? = null
 
@@ -61,30 +56,7 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding, MovieDetail
         }
     }
 
-//    private fun initExoPlayer(url: String) {
-//        Timber.d("Youtube url: $url")
-//        //Creating the player
-//        player = SimpleExoPlayer.Builder(requireContext()).build()
-//        viewBinding.apply {
-//            styledPlayerView.setControllerVisibilityListener(this@MovieDetailFragment)
-//            styledPlayerView.player = player
-//            val mediaItem =
-//                MediaItem.fromUri(url)
-//            player?.setMediaItem(mediaItem)
-//            player?.prepare()
-//            player?.play()
-//        }
-//    }
-
-    private fun releasePlayer() {
-        player?.apply {
-            pause()
-            release()
-        }
-    }
-
     override fun onDestroy() {
-        releasePlayer()
         super.onDestroy()
     }
 
@@ -109,13 +81,4 @@ class MovieDetailFragment : BaseFragment<FragmentMovieDetailBinding, MovieDetail
             }
         }
     }
-
-    override fun preparePlayback() {
-        // Handle then
-    }
-
-    override fun onVisibilityChange(visibility: Int) {
-        // Handle then
-    }
-
 }
