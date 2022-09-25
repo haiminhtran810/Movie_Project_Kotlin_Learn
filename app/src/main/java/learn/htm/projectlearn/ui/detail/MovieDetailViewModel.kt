@@ -3,6 +3,8 @@ package learn.htm.projectlearn.ui.detail
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 import learn.htm.projectlearn.base.BaseViewModel
 import learn.htm.projectlearn.data.remote.repository.MovieRepository
@@ -32,24 +34,22 @@ class MovieDetailViewModel(private val movieRepository: MovieRepository) :
     }
 
     fun getVideo(idMovie: String) {
-        viewModelScope.launch(Dispatchers.Main) {
-            try {
-                movieVideos.value = movieRepository.getVideos(idMovie)
-            } catch (e: Exception) {
-                onError(e)
+        viewModelScope.launch {
+            movieRepository.getVideos(idMovie).catch { error ->
+                onError(error)
+            }.collect {
+                movieVideos.postValue(it)
             }
         }
     }
 
     fun getMovieCredits(idMovie: String) {
-        viewModelScope.launch(Dispatchers.Main) {
-            try {
-                movieRepository.getMovieCredits(idMovie).let {
-                    cast.value = it.cast
-                    crew.value = it.crew
-                }
-            } catch (e: Exception) {
-                onError(e)
+        viewModelScope.launch {
+            movieRepository.getMovieCredits(idMovie).catch { error ->
+                onError(error)
+            }.collect {
+                cast.postValue(it.cast)
+                crew.postValue(it.crew)
             }
         }
     }

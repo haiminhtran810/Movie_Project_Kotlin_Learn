@@ -3,7 +3,10 @@ package learn.htm.projectlearn.data.remote.repository.movie
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import learn.htm.projectlearn.data.Constants
 import learn.htm.projectlearn.data.local.dao.MovieDao
 import learn.htm.projectlearn.data.pagingSource.NowPlayingPagingSource
@@ -34,8 +37,10 @@ class MovieRepositoryImpl(private val movieAPI: MovieAPI, private val movieDao: 
     }
 
 
-    override suspend fun getVideos(movieId: String): Videos {
-        return movieAPI.getVideos(movieId)
+    override suspend fun getVideos(movieId: String): Flow<Videos> {
+        return flow {
+            emit(movieAPI.getVideos(movieId))
+        }.flowOn(Dispatchers.IO)
     }
 
     override suspend fun getTopVideos(): Flow<PagingData<Movie>> {
@@ -56,8 +61,10 @@ class MovieRepositoryImpl(private val movieAPI: MovieAPI, private val movieDao: 
         ).flow
     }
 
-    override suspend fun getMovieCredits(movieId: String): MovieCreditsResponse {
-        return movieAPI.getMovieCredits(movieId)
+    override suspend fun getMovieCredits(movieId: String): Flow<MovieCreditsResponse> {
+        return flow {
+            emit(movieAPI.getMovieCredits(movieId))
+        }.flowOn(Dispatchers.IO)
     }
 
     override suspend fun updateMovieLocal(movie: Movie): Boolean {

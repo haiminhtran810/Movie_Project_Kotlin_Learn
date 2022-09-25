@@ -9,10 +9,10 @@ import learn.htm.projectlearn.model.Videos
 interface MovieRepository {
     suspend fun getMovieListPopular(): Flow<PagingData<Movie>>
     suspend fun getMovieDetailAsync(movieId: String): Movie
-    suspend fun getVideos(movieId: String): Videos
+    suspend fun getVideos(movieId: String): Flow<Videos>
     suspend fun getTopVideos(): Flow<PagingData<Movie>>
     suspend fun getUpcomingVideos(): Flow<PagingData<Movie>>
-    suspend fun getMovieCredits(movieId: String): MovieCreditsResponse
+    suspend fun getMovieCredits(movieId: String): Flow<MovieCreditsResponse>
 
     // Database
     suspend fun updateMovieLocal(movie: Movie): Boolean
